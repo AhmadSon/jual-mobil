@@ -40,6 +40,7 @@ Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://
 
 
 ## Langkah 2: Create the Database
+Buat database MySQL untuk aplikasi penjualan mobil, nama database <section>car_sales_db</section>
 
 
 3.  Configuration
