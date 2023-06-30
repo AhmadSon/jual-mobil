@@ -131,15 +131,11 @@ Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesModel
 <br>
 
 * <b>CustomerModel.php</b>
-        ```php
         
-        ```
 <br>
 
 * <b>SalesModel.php</b>
-        ```php
         
-        ```
 <br>
 
 * <b>TransactionModel.php</b>
@@ -161,9 +157,7 @@ Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesModel
 <br>
 
 * <b>VehicleModel.php</b>
-        ```php
         
-        ```
 <br>
 
 
