@@ -68,6 +68,7 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
     CURRENT_TIMESTAMP
     );
     ```
+<br>
 
 3. <b>Vehicles Table</b>
     ```sql
@@ -82,6 +83,7 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
     );
 
     ```
+<br>
 
 4. <b>Transactions Table</b>
     ```sql
@@ -100,6 +102,7 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
     ) ENGINE=InnoDB;
 
     ```
+<br>
 
 ## Langkah 3: Configuration
 
