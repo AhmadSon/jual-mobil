@@ -30,8 +30,15 @@
             <?php endforeach; ?>
         </select><br>
 
+        <label>Salesperson:</label>
+        <select name="sales_id" required>
+            <?php foreach ($sales as $sales) : ?>
+                <option value="<?= $sales['id'] ?>"><?= $sales['name'] ?></option>
+            <?php endforeach; ?>
+        </select><br>
+
         <label>Transaction Date:</label>
-        <input type="date" name="transaction_date" required><br>
+        <input type="date" name="transaction_date" id="transaction_date" required><br>
 
         <label>Amount:</label>
         <input type="number" name="amount" id="amount" step="0.01" value="<?= $vehicle['price'] ?>" required><br>

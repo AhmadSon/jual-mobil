@@ -23,5 +23,4 @@
 </table>
 
 <a class="btn btn-primary" href="<?= site_url('car/create') ?>">Add Car</a>
-<a class="btn btn-secondary" href="<?= base_url('logout') ?>">Logout</a>
 <?= $this->endSection() ?>

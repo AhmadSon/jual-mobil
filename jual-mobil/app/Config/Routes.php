@@ -29,11 +29,8 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'CarController::index');
+$routes->get('/', 'VehicleController::index');
 
-$routes->get('car', 'CarController::index');
-$routes->get('car/create', 'CarController::create');
-$routes->post('car/store', 'CarController::store');
 
 $routes->group('customer', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/', 'CustomerController::index');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2023 at 03:40 PM
+-- Generation Time: Jun 30, 2023 at 04:06 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.4
 
@@ -100,14 +100,23 @@ CREATE TABLE `salespeople` (
 
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `vehicle_id` int(11) NOT NULL,
-  `sales_id` int(11) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `vehicle_id` int(11) DEFAULT NULL,
+  `sales_id` int(11) DEFAULT NULL,
   `transaction_date` date NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `customer_id`, `vehicle_id`, `sales_id`, `transaction_date`, `amount`, `created_at`, `updated_at`) VALUES
+(5, 1, 1, 1, '2023-06-08', '15000000.00', '2023-06-29 13:45:47', '2023-06-29 13:50:31'),
+(6, 1, NULL, NULL, '0000-00-00', '0.00', '2023-06-29 13:49:03', '2023-06-29 13:49:03'),
+(7, 2, NULL, NULL, '0000-00-00', '0.00', '2023-06-30 00:31:16', '2023-06-30 00:31:16');
 
 -- --------------------------------------------------------
 
@@ -208,25 +217,13 @@ ALTER TABLE `salespeople`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`sales_id`) REFERENCES `sales` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
