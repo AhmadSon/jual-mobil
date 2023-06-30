@@ -105,6 +105,8 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
 <br>
 
 ## Langkah 3: Configuration
+<p>Buka file <b>app/Config/Database.php</b> dan konfigurasikan detail koneksi database Anda (misalnya, hostname, username, password, database name).</p>
+<br>
 
 
 4. Create Model
