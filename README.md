@@ -69,8 +69,39 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
     );
     ```
 
+3. <b>Vehicles Table</b>
+    ```sql
+    CREATE TABLE vehicles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    brand VARCHAR(100),
+    model VARCHAR(100),
+    year INT,
+    price DECIMAL(10, 2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
 
-3.  Configuration
+    ```
+
+4. <b>Transactions Table</b>
+    ```sql
+    CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    vehicle_id INT,
+    sales_id INT,
+    transaction_date DATE,
+    amount DECIMAL(10, 2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles(id),
+    FOREIGN KEY (sales_id) REFERENCES sales(id)
+    ) ENGINE=InnoDB;
+
+    ```
+
+## Langkah 3: Configuration
 
 
 4. Create Model
