@@ -43,7 +43,7 @@ Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://
 Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`<p><br>
 
 1. <b>Customers Table:</b>
-```sql
+    ```sql
         CREATE TABLE customers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100),
@@ -53,11 +53,11 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );
-```
+    ```
 <br>
 
 2. <b>Sales Table</b>
-```sql
+    ```sql
     CREATE TABLE sales (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
@@ -67,7 +67,7 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE
     CURRENT_TIMESTAMP
     );
-```
+    ```
 
 
 3.  Configuration
