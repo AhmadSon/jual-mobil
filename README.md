@@ -109,14 +109,70 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
 <br>
 
 
-4. Create Model
+## Langkah 4: Create Model
+Buat model file <b>app/Models/</b><p>
+Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesModel.php`, `TransactionModel.php`, dan `VehicleModel.php`<p>
+
+   * <b>CarModel.php</b>
+        ```php
+        <?php
+
+        namespace App\Models;
+
+        use CodeIgniter\Model;
+
+        class CarModel extends Model
+        {
+            protected $table = 'cars';
+            protected $primaryKey = 'id';
+            protected $allowedFields = ['make', 'model', 'price'];
+        }
+        ```
+<br>
+
+* <b>CustomerModel.php</b>
+        ```php
+        
+        ```
+<br>
+
+* <b>SalesModel.php</b>
+        ```php
+        
+        ```
+<br>
+
+* <b>TransactionModel.php</b>
+        ```php
+        <?php
+
+        namespace App\Models;
+
+        use CodeIgniter\Model;
+
+        class TransactionModel extends Model
+        {
+            protected $table = 'transactions';
+            protected $primaryKey = 'id';
+            protected $allowedFields = ['vehicle_id', 'customer_id', 'sales_id', 'amount', 'transaction_date'];
+        }
+
+        ```
+<br>
+
+* <b>VehicleModel.php</b>
+        ```php
+        
+        ```
+<br>
 
 
-5. Create Controller
+
+## Langkah 5: Create Controller
 
 
-6. Create Views
+## Langkah 6: Create Views
 
 
-7. Routes
+## Langkah 7: Routes
 
