@@ -64,7 +64,8 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
     email VARCHAR(100),
     phone VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE            CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE
+    CURRENT_TIMESTAMP
     );
     ```
 
