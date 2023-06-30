@@ -34,8 +34,8 @@ composer create-project codeigniter4/appstarter jual-mobil -vvv
   - <b>create-project</b> adalah perintah untuk membuat proyek baru dengan composer;
   - <b>codeigniter4/appstarter</b> adalah file CI yang akan di-download;
   - <b>jual-mobil</b> adalah nama proyek yang akan kita buat;
-  - <b>-vvv</b> berfungsi untuk melihat proses install lebih detail.<p>
-Jika belum mempunyai composer anda bisa download di sini https://getcomposer.org/download/</p><br>
+  - <b>-vvv</b> berfungsi untuk melihat proses install lebih detail.<br>
+Jika belum mempunyai composer anda bisa download di sini https://getcomposer.org/download/</p>
 
 
 2. Create the Database
