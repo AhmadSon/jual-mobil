@@ -42,7 +42,7 @@ Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://
 ## Langkah 2: Create the Database
 Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`<p><br>
 
-   1. <b>Customers Table:</b>
+1. <b>Customers Table:</b>
       ```sql
         CREATE TABLE customers (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,7 +54,19 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );
         ```
+<br>
 
+2. <b>Sales Table</b>
+    ```sql
+    CREATE TABLE sales (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE            CURRENT_TIMESTAMP
+    );
+    ```
 
 
 3.  Configuration
