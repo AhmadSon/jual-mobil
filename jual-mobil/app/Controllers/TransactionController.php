@@ -56,6 +56,7 @@ class TransactionController extends BaseController
         return redirect()->to('transaction');
     }
 
+
     public function edit($id)
     {
         $transactionModel = new TransactionModel();

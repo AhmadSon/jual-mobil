@@ -28,9 +28,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= site_url('/transaction') ?>">Transactions</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('/transaction/report') ?>">Transaction Report</a>
-                </li>
             </ul>
         </div>
     </nav>

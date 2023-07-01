@@ -22,13 +22,12 @@
 
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required><br>
-
-        <button type="submit">Add Sales</button>
+        <br>
+        <button class="btn btn-primary" type="submit">Add Sales</button>
     </form>
 
     <!-- Add any additional HTML or content as needed -->
 </body>
 
 </html>
-<a class="btn btn-primary" href="<?= site_url('sales/create') ?>">Add Sales</a>
 <?= $this->endSection() ?>

@@ -27,7 +27,7 @@
                 <td><?= $transaction['vehicle_id'] ?></td>
                 <td><?= $transaction['sales_id'] ?></td>
                 <td><?= $transaction['transaction_date'] ?></td>
-                <td><?= $transaction['amount'] ?></td>
+                <td><?= "$" . $transaction['amount'] ?></td>
                 <td>
                     <a href="<?= site_url('transaction/edit/' . $transaction['id']) ?>">Edit</a>
                     <a href="<?= site_url('transaction/delete/' . $transaction['id']) ?>" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</a>

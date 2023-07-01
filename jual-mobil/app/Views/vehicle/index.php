@@ -27,7 +27,7 @@
                 <td><?= $vehicle['brand'] ?></td>
                 <td><?= $vehicle['model'] ?></td>
                 <td><?= $vehicle['year'] ?></td>
-                <td><?= $vehicle['price'] ?></td>
+                <td><?= "$" . $vehicle['price'] ?></td>
                 <td>
                     <a href="<?= site_url('vehicle/edit/' . $vehicle['id']) ?>">Edit</a>
                     <a href="<?= site_url('vehicle/delete/' . $vehicle['id']) ?>" onclick="return confirm('Are you sure you want to delete this vehicle?')">Delete</a>
