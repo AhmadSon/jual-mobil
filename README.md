@@ -131,7 +131,7 @@ Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesModel
 <br>
 
 * <b>CustomerModel.php</b>
-        ```php
+```php
         <?php
 
         namespace App\Models;
@@ -144,7 +144,7 @@ Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesModel
             protected $primaryKey = 'id';
             protected $allowedFields = ['name', 'email', 'phone'];
         }
-        ```
+```
         
 <br>
 
