@@ -165,94 +165,94 @@ Buat model file <b>app/Models/</b><p>
 Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesPersonModel.php`, dan `TransactionModel.php`<p>
 
 * <b>CarModel.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use CodeIgniter\Model;
+    use CodeIgniter\Model;
 
-class CarModel extends Model
-{
-    protected $table = 'cars';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'type', 'price', 'picture', 'description'];
-
-    public function search($keyword)
+    class CarModel extends Model
     {
-        return $this->like('name', $keyword)->findAll();
+        protected $table = 'cars';
+        protected $primaryKey = 'id';
+        protected $allowedFields = ['name', 'type', 'price', 'picture', 'description'];
+
+        public function search($keyword)
+        {
+            return $this->like('name', $keyword)->findAll();
+        }
     }
-}
-```
+    ```
 <br>
 
 
 * <b>CustomerModel.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use CodeIgniter\Model;
+    use CodeIgniter\Model;
 
-class CustomerModel extends Model
-{
-    protected $table = 'customers';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'phone_number', 'email', 'address'];
-    public function search($keyword)
+    class CustomerModel extends Model
     {
-        return $this->like('name', $keyword)->findAll();
+        protected $table = 'customers';
+        protected $primaryKey = 'id';
+        protected $allowedFields = ['name', 'phone_number', 'email', 'address'];
+        public function search($keyword)
+        {
+            return $this->like('name', $keyword)->findAll();
+        }
     }
-}
-```        
+    ```        
 <br>
 
 
 * <b>SalesPersonModel.php</b>
-```php
-<?php
-namespace App\Models;
-use CodeIgniter\Model;
-class SalesPersonModel extends Model
-{
-    protected $table = 'salesperson';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'phone_number', 'email'];
-
-    public function search($keyword)
+    ```php
+    <?php
+    namespace App\Models;
+    use CodeIgniter\Model;
+    class SalesPersonModel extends Model
     {
-        return $this->like('name', $keyword)->findAll();
+        protected $table = 'salesperson';
+        protected $primaryKey = 'id';
+        protected $allowedFields = ['name', 'phone_number', 'email'];
+
+        public function search($keyword)
+        {
+            return $this->like('name', $keyword)->findAll();
+        }
     }
-}
-```     
+    ```     
 <br>
 
 
 * <b>TransactionModel.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use CodeIgniter\Model;
+    use CodeIgniter\Model;
 
-class TransactionModel extends Model
-{
-    protected $table = 'transactions';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['customer_id', 'car_id', 'salesperson_id', 'price'];
-    protected $useTimestamps = true; // Enable automatic timestamps
-
-    protected $createdField = 'created_at'; // Specify the created_at field name
-    protected $updatedField = 'updated_at'; // Specify the updated_at field name
-
-    public function search($keyword)
+    class TransactionModel extends Model
     {
-        return $this->like('customer_id', $keyword)->findAll();
+        protected $table = 'transactions';
+        protected $primaryKey = 'id';
+        protected $allowedFields = ['customer_id', 'car_id', 'salesperson_id', 'price'];
+        protected $useTimestamps = true; // Enable automatic timestamps
+
+        protected $createdField = 'created_at'; // Specify the created_at field name
+        protected $updatedField = 'updated_at'; // Specify the updated_at field name
+
+        public function search($keyword)
+        {
+            return $this->like('customer_id', $keyword)->findAll();
+        }
     }
-}
-```
+    ```
 <br>
 
 
@@ -262,244 +262,244 @@ Buat Controller file <b>app/Controllers/</b><p>
 Disini model yang kita buat ada `CarsController.php`, `CustomerController.php`, `DashboardController.php`, `SalesPersonController.php`, `Home.php`, `Pages.php`, `UserPageController.php`, dan `TransactionController.php`<p>
 
 * <b>CarsController.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\CarModel;
-use CodeIgniter\Controller;
+    use App\Models\CarModel;
+    use CodeIgniter\Controller;
 
-class CarsController extends Controller
-{
-    public function index()
+    class CarsController extends Controller
     {
-        $carModel = new CarModel();
-        $data = [
-            'title' => 'Cars List',
-            'cars' => $carModel->findAll()
-            
-        ];
+        public function index()
+        {
+            $carModel = new CarModel();
+            $data = [
+                'title' => 'Cars List',
+                'cars' => $carModel->findAll()
+                
+            ];
 
-        return view('cars/index', $data);
+            return view('cars/index', $data);
+        }
+
+        public function create()
+        {
+            $data = [
+                'title' => 'Input New Cars'
+            ];
+            return view('cars/create', $data);
+        }
+
+        public function store()
+        {
+
+            $filepicture = $this->request->getFile('picture');
+            $filepicture->move('car_img');
+            $namepicture = $filepicture->getName();
+
+            $carModel = new CarModel();
+            $carData = [
+                'name' => $this->request->getPost('name'),
+                'type' => $this->request->getPost('type'),
+                'picture' => $namepicture,
+                'description' => $this->request->getPost('description'),
+                'price' => $this->request->getPost('price'),
+            ];
+
+            $carModel->insert($carData);
+
+            return redirect()->to('/car');
+        }
+
+        public function edit($id)
+        {
+            $carModel = new CarModel();
+            $data = [
+                'title' => 'Edit Cars',
+                'car' => $carModel->find($id)
+                
+            ];
+            return view('cars/edit', $data);
+        }
+
+        public function update($id)
+        {
+            $carModel = new CarModel();
+            $carData = [
+                'name' => $this->request->getPost('name'),
+                'type' => $this->request->getPost('type'),
+                'price' => $this->request->getPost('price'),
+                'description' => $this->request->getPost('description'),
+                'price' => $this->request->getPost('price'),
+            ];
+
+
+            $carModel->update($id, $carData);
+
+            return redirect()->to('/car');
+        }
+
+        public function delete($id)
+        {
+            $carModel = new CarModel();
+            $carModel->delete($id);
+
+            return redirect()->to('/car');
+        }
+
+        public function find()
+        {
+            $keyword = $this->request->getPost('keyword');
+            $carModel = new CarModel();
+
+            $data = [
+                'title' => 'Edit Sales Person',
+                'cars' => $carModel->search($keyword)
+            ];
+
+            return view('cars/index', $data);
+        }
     }
-
-    public function create()
-    {
-        $data = [
-            'title' => 'Input New Cars'
-        ];
-        return view('cars/create', $data);
-    }
-
-    public function store()
-    {
-
-        $filepicture = $this->request->getFile('picture');
-        $filepicture->move('car_img');
-        $namepicture = $filepicture->getName();
-
-        $carModel = new CarModel();
-        $carData = [
-            'name' => $this->request->getPost('name'),
-            'type' => $this->request->getPost('type'),
-            'picture' => $namepicture,
-            'description' => $this->request->getPost('description'),
-            'price' => $this->request->getPost('price'),
-        ];
-
-        $carModel->insert($carData);
-
-        return redirect()->to('/car');
-    }
-
-    public function edit($id)
-    {
-        $carModel = new CarModel();
-        $data = [
-            'title' => 'Edit Cars',
-            'car' => $carModel->find($id)
-            
-        ];
-        return view('cars/edit', $data);
-    }
-
-    public function update($id)
-    {
-        $carModel = new CarModel();
-        $carData = [
-            'name' => $this->request->getPost('name'),
-            'type' => $this->request->getPost('type'),
-            'price' => $this->request->getPost('price'),
-            'description' => $this->request->getPost('description'),
-            'price' => $this->request->getPost('price'),
-        ];
-
-
-        $carModel->update($id, $carData);
-
-        return redirect()->to('/car');
-    }
-
-    public function delete($id)
-    {
-        $carModel = new CarModel();
-        $carModel->delete($id);
-
-        return redirect()->to('/car');
-    }
-
-    public function find()
-    {
-        $keyword = $this->request->getPost('keyword');
-        $carModel = new CarModel();
-
-        $data = [
-            'title' => 'Edit Sales Person',
-            'cars' => $carModel->search($keyword)
-        ];
-
-        return view('cars/index', $data);
-    }
-}
-```
+    ```
 <br>
 
 
 * <b>CustomerController.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\CustomerModel;
-use CodeIgniter\Controller;
+    use App\Models\CustomerModel;
+    use CodeIgniter\Controller;
 
-class CustomerController extends Controller
-{
-    public function index()
+    class CustomerController extends Controller
     {
-        $customerModel = new CustomerModel();
-        $data = [
-            'title' => 'Customer List',
-            'customers' => $customerModel->findAll()
+        public function index()
+        {
+            $customerModel = new CustomerModel();
+            $data = [
+                'title' => 'Customer List',
+                'customers' => $customerModel->findAll()
+                
+            ];
+
+            return view('customer/index', $data);
+        }
+
+        public function create()
+        {
+            $data = [
+                'title' => 'Tambah Customer'
+            ];
+            return view('customer/create', $data);
+        }
+
+        public function store()
+        {
+            $customerModel = new CustomerModel();
+
+            $data = [
+                
+                'name' => $this->request->getVar('name'),
+                'phone_number' => $this->request->getVar('phone_number'),
+                'email' => $this->request->getVar('email'),
+                'address' => $this->request->getVar('address')
+            ];
+
+            $customerModel->insert($data);
+
+            return redirect()->to('/customer');
+        }
+
+        public function edit($id)
+        {
+            $customerModel = new CustomerModel();
+            $data['customer'] = $customerModel->find($id);
+
+            $data = [
+                'title' => 'Edit Customer',
+                'customer' => $customerModel->find($id)
+                
+            ];
+
+            return view('customer/edit', $data);
+        }
+
+        public function update($id)
+        {
+            $customerModel = new CustomerModel();
+
+            $data = [
+                'name' => $this->request->getVar('name'),
+                'phone_number' => $this->request->getVar('phone_number'),
+                'email' => $this->request->getVar('email'),
+                'address' => $this->request->getVar('address')
+            ];
+
+            $customerModel->update($id, $data);
+
+            return redirect()->to('/customer');
+        }
+
+        public function delete($id)
+        {
+            $customerModel = new CustomerModel();
+            $customerModel->delete($id);
+
+            return redirect()->to('/customer');
             
-        ];
+        }
 
-        return view('customer/index', $data);
+        public function find()
+        {
+            $keyword = $this->request->getPost('keyword');
+            $customerModel = new CustomerModel();
+
+            $data = [
+                'title' => 'Edit Customer',
+                'customers' => $customerModel->search($keyword)
+            ];
+
+            return view('customer/index', $data);
+        }
+
     }
-
-    public function create()
-    {
-        $data = [
-            'title' => 'Tambah Customer'
-        ];
-        return view('customer/create', $data);
-    }
-
-    public function store()
-    {
-        $customerModel = new CustomerModel();
-
-        $data = [
-            
-            'name' => $this->request->getVar('name'),
-            'phone_number' => $this->request->getVar('phone_number'),
-            'email' => $this->request->getVar('email'),
-            'address' => $this->request->getVar('address')
-        ];
-
-        $customerModel->insert($data);
-
-        return redirect()->to('/customer');
-    }
-
-    public function edit($id)
-    {
-        $customerModel = new CustomerModel();
-        $data['customer'] = $customerModel->find($id);
-
-        $data = [
-            'title' => 'Edit Customer',
-            'customer' => $customerModel->find($id)
-            
-        ];
-
-        return view('customer/edit', $data);
-    }
-
-    public function update($id)
-    {
-        $customerModel = new CustomerModel();
-
-        $data = [
-            'name' => $this->request->getVar('name'),
-            'phone_number' => $this->request->getVar('phone_number'),
-            'email' => $this->request->getVar('email'),
-            'address' => $this->request->getVar('address')
-        ];
-
-        $customerModel->update($id, $data);
-
-        return redirect()->to('/customer');
-    }
-
-    public function delete($id)
-    {
-        $customerModel = new CustomerModel();
-        $customerModel->delete($id);
-
-        return redirect()->to('/customer');
-        
-    }
-
-    public function find()
-    {
-        $keyword = $this->request->getPost('keyword');
-        $customerModel = new CustomerModel();
-
-        $data = [
-            'title' => 'Edit Customer',
-            'customers' => $customerModel->search($keyword)
-        ];
-
-        return view('customer/index', $data);
-    }
-
-}
-```
+    ```
 <br>
 
 
 * <b>DashboardController.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\TransactionModel;
-use CodeIgniter\Controller;
+    use App\Models\TransactionModel;
+    use CodeIgniter\Controller;
 
-class DashboardController extends Controller
-{
-    public function index()
+    class DashboardController extends Controller
     {
-        $transactionModel = new TransactionModel();
-        $transactions = $transactionModel->findAll();
+        public function index()
+        {
+            $transactionModel = new TransactionModel();
+            $transactions = $transactionModel->findAll();
 
-        $data['prices'] = [];
-        $data['dates'] = [];
-        $data['title'] = 'Dasboard';
+            $data['prices'] = [];
+            $data['dates'] = [];
+            $data['title'] = 'Dasboard';
 
-        foreach ($transactions as $transaction) {
-            $data['prices'][] = $transaction['price'];
-            $data['dates'][] = $transaction['created_at'];
+            foreach ($transactions as $transaction) {
+                $data['prices'][] = $transaction['price'];
+                $data['dates'][] = $transaction['created_at'];
+            }
+
+            return view('sales/dashboard', $data);
         }
-
-        return view('sales/dashboard', $data);
     }
-}
-```
+    ```
 <br>
 
 
