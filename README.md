@@ -50,6 +50,7 @@
   - [Langkah 7: Create Views](#langkah-7-create-views)
   - [Langkah 8: Routes](#langkah-8-routes)
   - [Membuat Menu LOGIN](#membuat-menu-login)
+- [Selesai](#terimakasih)
 
 
 ##  Server DEMO
@@ -61,7 +62,7 @@ User/Password Admin Page:<p>
 > `composer install` lalu `composer update` untuk menginstall dan memperbaharui versi vendor<p>
 
 ### Video Penjelasan Aplikasi
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+(https://www.youtube.com/watch?v=41PfBAvXD3U)
 
 ## Langkah Pembuatan
 ### Langkah 1: Instal CodeIgniter 4
@@ -2487,5 +2488,4 @@ buka `app/Config/Routes.php` file dan tambahkan routes:<p>
 # TERIMAKASIH
 Itu saja dari penjelasan kami. Untuk ke atas silahkan naik rocket ini:<P>
 [![](asset/giphy.gif)](#daftar-isi)
-[![Version](https://cocoapod-badges.herokuapp.com/v/youtube-ios-player-helper/badge.png)](https://cocoapods.org/pods/youtube-ios-player-helper)
 
