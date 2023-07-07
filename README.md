@@ -5,6 +5,7 @@
             <th>Nama</th>
             <th>NIM</th>
             <th>Kelas</th>
+            <th>Contribution</th>
         </tr>
         <tr>
             <td>Ahmad Syukron</td>
@@ -21,11 +22,39 @@
             <td>312110219</td>
             <td>TI.21.A.1</td>
         </tr>
+        <tr>
+            <td>Design User Interface (Front End, HTML dan CSS)</td>
+            <td>Rancangan Basis Data ERD</td>
+            <td>Publikasi Aplikasi (Web Hosting)</td>
+        </tr>
     </table>
 </body>
+ 
+## Pembuatan Bersama
+* Implementasi kode php menggunakan CodeIgniter 4
+* Laporan (Dalam Bentuk toturial Lengkap dengan tahapan hasil eksekusi query) dalam bentuk:<p>
+  + README.md
+  + Video yang diyoutube
 
-# Langkah Pembuatan
-## Langkah 1: Instal CodeIgniter 4
+# Daftar Isi
+
+- [Langkah Pembuatan](#langkah-pembuatan)
+  - [Langkah 1: Install Codeigniter 4](#langkah-1-instal-codeigniter-4)
+  - [Langkah 2: Create ERD](#langkah-2-create-erd)
+  - [Langkah 3: Create the Database](#langkah-3-create-the-database)
+  - [Langkah 4: Configuration](#langkah-4-configuration)
+  - [Langkah 5: Create Model](#langkah-5-create-model)
+  - [Langkah 6: Create Controller](#langkah-6-create-controller)
+  - [Langkah 7: Create Views](#langkah-7-create-views)
+  - [Langkah 8: Routes](#langkah-8-routes)
+  - [Membuat Menu LOGIN](#membuat-menu-login)
+- [Server DEMO](#server-demo)
+
+
+
+
+## Langkah Pembuatan
+### Langkah 1: Instal CodeIgniter 4
 
 Download dan install CodeIgniter 4 menggunakan Composer dengan cara 
 ```bash
@@ -38,202 +67,245 @@ composer create-project codeigniter4/appstarter jual-mobil -vvv
 
 Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://getcomposer.org/download/) </p><br>
 
+### Langkah 2: Create ERD
 
-## Langkah 2: Create the Database
-Buat database MySQL untuk aplikasi penjualan mobil, nama database `car_sales_db`<p><br>
-
-1. <b>Customers Table:</b>
-    ```sql
-        CREATE TABLE customers (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100),
-        email VARCHAR(100),
-        phone VARCHAR(20),
-        address VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        );
-    ```
 <br>
 
-2. <b>Sales Table</b>
-    ```sql
-    CREATE TABLE sales (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    phone VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE
-    CURRENT_TIMESTAMP
-    );
-    ```
+
+### Langkah 3: Create the Database
+Buat database MySQL untuk aplikasi penjualan mobil, nama database `ci4`<p><br>
+
+1. <b>Cars Table:</b>
+
 <br>
 
-3. <b>Vehicles Table</b>
-    ```sql
-    CREATE TABLE vehicles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    brand VARCHAR(100),
-    model VARCHAR(100),
-    year INT,
-    price DECIMAL(10, 2),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    );
+2. <b>Customers Table</b>
 
-    ```
 <br>
 
-4. <b>Transactions Table</b>
-    ```sql
-    CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
-    vehicle_id INT,
-    sales_id INT,
-    transaction_date DATE,
-    amount DECIMAL(10, 2),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES customers(id),
-    FOREIGN KEY (vehicle_id) REFERENCES vehicles(id),
-    FOREIGN KEY (sales_id) REFERENCES sales(id)
-    ) ENGINE=InnoDB;
+3. <b>Salesperson Table</b>
 
-    ```
 <br>
 
-## Langkah 3: Configuration
+4. <b>Transaction Table</b>
+
+<br>
+
+5. <b>Users Table</b>
+
+<br>
+
+
+### Langkah 4: Configuration
 <p>Buka file <b>app/Config/Database.php</b> dan konfigurasikan detail koneksi database Anda (misalnya, hostname, username, password, database name).</p>
 <br>
 
 
-## Langkah 4: Create Model
+### Langkah 5: Create Model
 Buat model file <b>app/Models/</b><p>
-Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesModel.php`, `TransactionModel.php`, dan `VehicleModel.php`<p>
+Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesPersonModel.php`, dan `TransactionModel.php`<p>
 
-   * <b>CarModel.php</b>
-        ```php
-        <?php
-
-        namespace App\Models;
-
-        use CodeIgniter\Model;
-
-        class CarModel extends Model
-        {
-            protected $table = 'cars';
-            protected $primaryKey = 'id';
-            protected $allowedFields = ['make', 'model', 'price'];
-        }
-        ```
+* <b>CarModel.php</b>
+       
 <br>
 
 * <b>CustomerModel.php</b>
-```php
-        <?php
 
-        namespace App\Models;
-
-        use CodeIgniter\Model;
-
-        class CustomerModel extends Model
-        {
-            protected $table = 'customers';
-            protected $primaryKey = 'id';
-            protected $allowedFields = ['name', 'email', 'phone'];
-        }
-```
         
 <br>
 
-* <b>SalesModel.php</b>
-```php
-       <?php
+* <b>SalesPersonModel.php</b>
 
-        namespace App\Models;
-
-        use CodeIgniter\Model;
-
-        class SalesModel extends Model
-        {
-            protected $table = 'sales';
-            protected $primaryKey = 'id';
-            protected $allowedFields = ['name', 'email', 'phone'];
-        }
-```
         
 <br>
 
 * <b>TransactionModel.php</b>
-```php
-        <?php
 
-        namespace App\Models;
-
-        use CodeIgniter\Model;
-
-        class TransactionModel extends Model
-        {
-            protected $table = 'transactions';
-            protected $primaryKey = 'id';
-            protected $allowedFields = ['vehicle_id', 'customer_id', 'sales_id', 'amount', 'transaction_date'];
-        }
-
-```
-<br>
-
-* <b>VehicleModel.php</b>
-```php
-<?php
-
-namespace App\Models;
-
-use CodeIgniter\Model;
-
-class VehicleModel extends Model
-{
-    protected $table = 'vehicles';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['brand', 'model', 'year', 'price'];
-
-    public function getVehicles()
-    {
-        return $this->findAll();
-    }
-
-    public function getVehicle($id)
-    {
-        return $this->find($id);
-    }
-
-    public function addVehicle($data)
-    {
-        return $this->insert($data);
-    }
-
-    public function updateVehicle($id, $data)
-    {
-        return $this->update($id, $data);
-    }
-
-    public function deleteVehicle($id)
-    {
-        return $this->delete($id);
-    }
-}
-```
-        
 <br>
 
 
 
-## Langkah 5: Create Controller
+### Langkah 6: Create Controller
+Buat Controller file <b>app/Controllers/</b><p>
+Disini model yang kita buat ada `CarsController.php`, `CustomerController.php`, `SalesPersonController.php`, `Home.php`, `Pages.php`, `UserPageController.php`, dan `TransactionController.php`<p>
+
+* <b>CarsController.php</b>
+
+<br>
 
 
-## Langkah 6: Create Views
+* <b>CustomerController.php</b>
+
+<br>
 
 
-## Langkah 7: Routes
+* <b>SalesPersonController.php</b>
 
+<br>
+
+
+* <b>Home.php</b>
+
+<br>
+
+
+* <b>Pages.php</b>
+
+<br>
+
+
+* <b>UserPageController.php</b>
+
+<br>
+
+
+* <b>TransactionController.php</b>
+
+<br>
+
+
+
+### Langkah 7: Create Views
+* Buat folder `app/Views/cars` dan buat file ini:<p>
+
+  + <b>create.php</b>
+
+<br>
+
+
+  + <b>edit.php</b>
+
+<br>
+
+
+  + <b>index.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/customer` dan buat file ini:<p>
+
+  + <b>create.php</b>
+
+<br>
+
+
+  + <b>edit.php</b>
+
+<br>
+
+
+  + <b>index.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/Layout` dan buat file ini:<p>
+
+  + <b>footer.php</b>
+
+<br>
+
+
+  + <b>navbar.php</b>
+
+<br>
+
+
+  + <b>templete.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/Pages` dan buat file ini:<p>
+
+  + <b>about.php</b>
+
+<br>
+
+
+  + <b>contact.php</b>
+
+<br>
+
+
+  + <b>home.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/sales` dan buat file ini:<p>
+
+  + <b>dashboard.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/sales-person` dan buat file ini:<p>
+
+  + <b>create.php</b>
+
+<br>
+
+
+  + <b>edit.php</b>
+
+<br>
+
+
+  + <b>index.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/transaction` dan buat file ini:<p>
+
+  + <b>create.php</b>
+
+<br>
+
+
+  + <b>edit.php</b>
+
+<br>
+
+
+  + <b>index.php</b>
+
+<br>
+
+
+* Buat folder `app/Views/user` dan buat file ini:<p>
+
+  + <b>home.php</b>
+
+<br>
+
+
+  + <b>navbar.php</b>
+
+<br>
+
+
+  + <b>template.php</b>
+
+<br>
+
+  + <b>vehicle.php</b>
+
+<br>
+
+### Langkah 8: Routes
+buka `app/Config/Routes.php` file dan tambahkan routes:<p>
+
+
+<br>
+
+### Membuat Menu LOGIN
+
+<br>
+
+
+#  Server DEMO
+Untuk mencoba aplikasi ini silahkan klik [DEMO](https:dinkadealer.site) ini<p>
+User/Password Admin Page kita user: `admin2100` , password: `Ganteng12345`
