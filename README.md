@@ -900,68 +900,543 @@ class TransactionController extends BaseController
 * Buat folder `app/Views/cars` dan buat file ini:<p>
 
   + <b>create.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Input New Cars</h1>
 
+            <form method="post" action="/car/store" enctype="multipart/form-data">
+
+
+                <div class="row mb-3">
+                    <label for="name" class="col-sm-2 form-label">Name:</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="type" class="col-sm-2 form-label">Tipe</label>
+                    <div class="col-sm-5">
+                        <input type="type" name="type" id="type" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="picture" class="col-sm-2 form-label">Image</label>
+                    <div class="col-sm-5">
+                        <input class="form-control" type="file" id="picture" name="picture" required>
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="description" class="col-sm-2 form-label">Description</label>
+                    <div class="col-sm-5">
+                        <textarea name="description" id="description" class="form-control" required></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="price" class="col-sm-2 form-label">Price</label>
+                    <div class="col-sm-5">
+                        <input type="number" name="price" id="price" class="form-control" required oninput="formatCurrency(this)">
+                        <div id="currency-display" class="form-control" style="border: none; pointer-events: none;"></div>
+                    </div>
+                    <div class="col-sm-5">
+                    </div>
+                </div>
+
+                <script>
+                    function formatCurrency(input) {
+                        const price = input.value;
+                        const formattedPrice = new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(price);
+                        document.getElementById('currency-display').innerText = formattedPrice;
+                    }
+                </script>
+
+
+
+                <button type="submit" class="btn btn-primary">Add Cars</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
   + <b>edit.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Edit Cars Data</h1>
+            <form method="post" action="/car/update/<?= $car['id']; ?>" enctype="multipart/form-data">
+                <div class="row mb-3">
+                    <label for="name" class="form-label col-sm-2">Name</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="name" id="name" value="<?= $car['name']; ?>" class="form-control" required>
+                    </div>
+                </div>
 
+                <div class="row mb-3">
+                    <label for="type" class="form-label col-sm-2">Type</label>
+                    <div class="col-sm-5">
+                        <input type="type" name="type" id="type" value="<?= $car['type']; ?>" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="description" class="col-sm-2 form-label">Description</label>
+                    <div class="col-sm-5">
+                        <textarea name="description" id="description" class="form-control" required><?= $car['description']; ?></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="price" class="form-label col-sm-2">Price</label>
+                    <div class="col-sm-5">
+                        <input type="type" name="price" id="price" value="<?= $car['price']; ?>" class="form-control" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Cars</button>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
   + <b>index.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
 
+<div class="container">
+    <br>
+    <div class="d-flex justify-content-center">
+        <h1>Cars List</h1>
+    </div>
+
+
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-success" href="/car/create">Add New Cars</a>
+        <form action="/car/find" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="submit">Search</button>
+                    <a class="btn btn-info" href="/car" role="button">Reset</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <?php if (session()->has('success')) : ?>
+        <div class="alert alert-success"><?= session('success') ?></div>
+    <?php endif; ?>
+
+    <table class="table">
+        <thead>
+            <tr class="text-center">
+                <th>No</th>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($cars as $index => $customer) : ?>
+                <tr class="text-center">
+                    <td tyle="white-space: nowrap;"><?= $index + 1; ?></td>
+                    <td tyle="white-space: nowrap;"><?= $customer['name']; ?></td>
+                    <td tyle="white-space: nowrap;">
+
+                        <img class="img-fluid" src="/car_img/<?= $customer['picture']; ?>" alt="Car Picture" width="250px">
+
+                    </td>
+                    <td tyle="white-space: nowrap;"><?= $customer['type']; ?></td>
+                    <td><?= $customer['description']; ?></td>
+
+                    <td style="white-space: nowrap;">Rp <?= number_format($customer['price'], 0, ',', '.'); ?></td>
+
+
+                    <td style="white-space: nowrap;">
+                        <a href="/car/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                        <a href="/car/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
 * Buat folder `app/Views/customer` dan buat file ini:<p>
 
   + <b>create.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Add New Customer</h1>
 
+            <form method="post" action="/customer/store">
+
+
+                <div class="row mb-3">
+                    <label for="name" class="col-sm-2 form-label">Name:</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row mb-3">
+                    <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="email" class="col-sm-2 form-label">Email:</label>
+                    <div class="col-sm-5">
+                        <input type="email" name="email" id="email" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="address" class="col-sm-2 form-label">Address:</label>
+                    <div class="col-sm-5">
+                        <textarea name="address" id="address" class="form-control" required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Customer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
   + <b>edit.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Edit Customers</h1>
+            <form method="post" action="/customer/update/<?= $customer['id']; ?>">
+                <div class="row mb-3">
+                    <label for="name" class="form-label col-sm-2">Name:</label>
+                    <div class="col-sm-5">
+                    <input type="text" name="name" id="name" value="<?= $customer['name']; ?>" class="form-control" required>
+                    </div>
+                </div>
 
+                <div class="row mb-3">
+                    <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
+                    <div class="col-sm-5">
+                    <input type="text" name="phone_number" id="phone_number" value="<?= $customer['phone_number']; ?>" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="email" class="form-label col-sm-2">Email:</label>
+                    <div class="col-sm-5">
+                    <input type="email" name="email" id="email" value="<?= $customer['email']; ?>" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="address" class="form-label col-sm-2">Address:</label>
+                    <div class="col-sm-5">
+                    <textarea name="address" id="address" class="form-control" required><?= $customer['address']; ?></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Customer</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
   + <b>index.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
 
+<div class="container">
+
+
+    <br>
+    <div class="d-flex justify-content-center">
+        <h1>Customer List</h1>
+    </div>
+
+    
+    <div class="d-flex justify-content-between">
+    <a class="btn btn-success" href="/customer/create">Add New Customer</a>
+        <form action="/customer/find" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="submit">Search</button>
+                    <a class="btn btn-info" href="/customer" role="button">Reset</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <?php if (session()->has('success')) : ?>
+        <div class="alert alert-success"><?= session('success') ?></div>
+    <?php endif; ?>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($customers as $index => $customer) : ?>
+                <tr>
+                    <td><?= $index + 1; ?></td>
+                    <td><?= $customer['name']; ?></td>
+                    <td><?= $customer['phone_number']; ?></td>
+                    <td><?= $customer['email']; ?></td>
+                    <td><?= $customer['address']; ?></td>
+                    <td>
+                        <a href="/customer/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                        <a href="/customer/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    </table>
+
+
+
+
+</div>
+<?= $this->endSection(); ?>
+```
 <br>
 
 
 * Buat folder `app/Views/Layout` dan buat file ini:<p>
 
   + <b>footer.php</b>
+```php
+    <!-- Optional JavaScript; choose one of the two! -->
 
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
+```
 <br>
 
 
   + <b>navbar.php</b>
+```php
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
+        <div class="container">
+            <a class="navbar-brand" href="/">Dinka Dealer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/sales">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sales-person">Sales Person</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/car">Cars</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/transaction">Transaction</a>
+                    </li>
+                    
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="logout">Logout</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        
+</nav>
+```
 <br>
 
 
   + <b>templete.php</b>
+```php
+<!doctype html>
+<html lang="en">
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/style.css">
+
+    <title> <?= $title; ?> </title>
+</head>
+
+<body>
+
+    <?= $this->include('Layout/navbar') ?>
+
+    <?= $this->renderSection('content') ?>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
+```
 <br>
 
 
 * Buat folder `app/Views/Pages` dan buat file ini:<p>
 
   + <b>about.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
 
+<div class="container">
+<h1>Iman Setiawan</h1>
+<h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, libero. Officiis, impedit, vel commodi assumenda, magnam deserunt non veritatis sunt ducimus modi fugiat sapiente repellendus fugit? Odio facere atque quo.</h2>
+</div>
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
   + <b>contact.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
 
+<?= $this->section('content'); ?>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Contact Us</h1>
+            <?php foreach ($alamat as $a) : ?>
+                <ul>
+                    <li><?= $a['tipe']; ?></li>
+                    <li><?= $a['alamat']; ?></li>
+                    <li><?= $a['kota']; ?></li>
+                </ul>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
   + <b>home.php</b>
+```php
+<?= $this->extend('Layout/template'); ?>
+<?= $this->section('content'); ?>
 
+<div class="container">
+<h1>Dashbore</h1>
+
+
+<?= $this->endSection(); ?>
+```
 <br>
 
 
