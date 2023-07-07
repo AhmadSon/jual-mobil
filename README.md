@@ -2349,7 +2349,7 @@ Disini model yang kita buat ada `CarsController.php`, `CustomerController.php`, 
     ```
 <br>
 
-   + <b>vehicle.php</b>
+  + <b>vehicle.php</b>
     ```php
     <?= $this->extend('user/template'); ?>
     <?= $this->section('content'); ?>
