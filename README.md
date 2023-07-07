@@ -38,6 +38,7 @@
 
 # Daftar Isi
 
+- [Server DEMO](#server-demo)
 - [Langkah Pembuatan](#langkah-pembuatan)
   - [Langkah 1: Install Codeigniter 4](#langkah-1-instal-codeigniter-4)
   - [Langkah 2: Create ERD](#langkah-2-create-erd)
@@ -48,10 +49,11 @@
   - [Langkah 7: Create Views](#langkah-7-create-views)
   - [Langkah 8: Routes](#langkah-8-routes)
   - [Membuat Menu LOGIN](#membuat-menu-login)
-- [Server DEMO](#server-demo)
 
 
-
+##  Server DEMO
+Untuk mencoba aplikasi ini silahkan klik [DEMO](https:dinkadealer.site) ini<p>
+User/Password Admin Page kita user: `admin2100` , password: `Ganteng12345`
 
 ## Langkah Pembuatan
 ### Langkah 1: Instal CodeIgniter 4
@@ -76,24 +78,81 @@ Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://
 Buat database MySQL untuk aplikasi penjualan mobil, nama database `ci4`<p><br>
 
 1. <b>Cars Table:</b>
-
+```php
+CREATE TABLE `cars` (
+  `id` int(11) NOT NULL,
+  `picture` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `price` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 <br>
+
 
 2. <b>Customers Table</b>
-
+```php
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 <br>
+
 
 3. <b>Salesperson Table</b>
-
+```php
+CREATE TABLE `salesperson` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 <br>
+
 
 4. <b>Transaction Table</b>
-
+```php
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `car_id` varchar(255) NOT NULL,
+  `salesperson_id` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 <br>
+
 
 5. <b>Users Table</b>
-
+```php
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `reset_hash` varchar(255) DEFAULT NULL,
+  `reset_at` datetime DEFAULT NULL,
+  `reset_expires` datetime DEFAULT NULL,
+  `activate_hash` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `status_message` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `force_pass_reset` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
 <br>
+
 
 
 ### Langkah 4: Configuration
@@ -306,6 +365,4 @@ buka `app/Config/Routes.php` file dan tambahkan routes:<p>
 <br>
 
 
-#  Server DEMO
-Untuk mencoba aplikasi ini silahkan klik [DEMO](https:dinkadealer.site) ini<p>
-User/Password Admin Page kita user: `admin2100` , password: `Ganteng12345`
+
