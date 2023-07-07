@@ -2484,4 +2484,7 @@ buka `app/Config/Routes.php` file dan tambahkan routes:<p>
   
 <br>
 
+# TERIMAKASIH
+Itu saja dari penjelasan kami. Untuk ke atas silahkan naik rocket ini:<P>
+!(asset/giphy.gif)(#daftar-isi)
 
