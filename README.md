@@ -173,6 +173,7 @@ Buat model file <b>app/Models/</b><p>
 Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesPersonModel.php`, dan `TransactionModel.php`<p>
 
 #### CarModel.php
+
     ```php
     <?php
 
