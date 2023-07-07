@@ -62,7 +62,7 @@ User/Password Admin Page:<p>
 > `composer install` lalu `composer update` untuk menginstall dan memperbaharui versi vendor<p>
 
 ### Video Penjelasan Aplikasi
-[![](https://img.youtube.com/watch?v=41PfBAvXD3U/0.jpg)](https://www.youtube.com/watch?v=41PfBAvXD3U)
+[![](https://www.youtube.com/watch?v=41PfBAvXD3U)](https://www.youtube.com/watch?v=41PfBAvXD3U)
 
 ## Langkah Pembuatan
 ### Langkah 1: Instal CodeIgniter 4
