@@ -78,16 +78,16 @@ Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://
 Buat database MySQL untuk aplikasi penjualan mobil, nama database `ci4`<p><br>
 
 1. <b>Cars Table:</b>
-```sql
-CREATE TABLE `cars` (
-  `id` int(11) NOT NULL,
-  `picture` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `price` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
+    ```sql
+    CREATE TABLE `cars` (
+      `id` int(11) NOT NULL,
+      `picture` varchar(255) NOT NULL,
+      `name` varchar(255) NOT NULL,
+      `type` varchar(255) NOT NULL,
+      `description` varchar(255) DEFAULT NULL,
+      `price` varchar(255) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    ```
 <br>
 
 
