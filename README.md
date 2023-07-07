@@ -172,7 +172,7 @@ Buat database MySQL untuk aplikasi penjualan mobil, nama database `ci4`<p><br>
 Buat model file <b>app/Models/</b><p>
 Disini model yang kita buat ada `CarModel.php`, `CustomerModel.php`, `SalesPersonModel.php`, dan `TransactionModel.php`<p>
 
-* <b>CarModel.php</b>
+#### CarModel.php
     ```php
     <?php
 
