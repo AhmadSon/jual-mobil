@@ -729,169 +729,169 @@ Disini model yang kita buat ada `CarsController.php`, `CustomerController.php`, 
 
 
 * <b>TransactionController.php</b>
-  ```php
-  <?php
+    ```php
+    <?php
 
-  namespace App\Controllers;
+    namespace App\Controllers;
 
-  use App\Models\CustomerModel;
-  use App\Models\CarModel;
-  use App\Models\SalesPersonModel;
-  use App\Models\TransactionModel;
+    use App\Models\CustomerModel;
+    use App\Models\CarModel;
+    use App\Models\SalesPersonModel;
+    use App\Models\TransactionModel;
 
-  class TransactionController extends BaseController
-  {
-      protected $customerModel;
-      protected $carModel;
-      protected $salesPersonModel;
+    class TransactionController extends BaseController
+    {
+        protected $customerModel;
+        protected $carModel;
+        protected $salesPersonModel;
 
-      public function __construct()
-      {
-          $this->customerModel = new CustomerModel();
-          $this->carModel = new CarModel();
-          $this->salesPersonModel = new SalesPersonModel();
-      }
+        public function __construct()
+        {
+            $this->customerModel = new CustomerModel();
+            $this->carModel = new CarModel();
+            $this->salesPersonModel = new SalesPersonModel();
+        }
 
-      // Display a list of transactions
-      public function index()
-      {
-          // Assuming you have a TransactionModel.php model, retrieve all transactions
-          $transactionModel = new TransactionModel();
+        // Display a list of transactions
+        public function index()
+        {
+            // Assuming you have a TransactionModel.php model, retrieve all transactions
+            $transactionModel = new TransactionModel();
 
 
-          $data = [
-              'title' => 'Transaction',
-              'transactions' => $transactionModel->findAll()
-              
-          ];
+            $data = [
+                'title' => 'Transaction',
+                'transactions' => $transactionModel->findAll()
+                
+            ];
 
-          return view('transaction/index', $data);
-      }
+            return view('transaction/index', $data);
+        }
 
-      // Display the create transaction form
-      public function create()
-      {
-          $data['title'] = 'Create Transaction';
-          $data['customers'] = $this->customerModel->findAll();
-          $data['cars'] = $this->carModel->findAll();
-          $data['salespersons'] = $this->salesPersonModel->findAll();
-      
+        // Display the create transaction form
+        public function create()
+        {
+            $data['title'] = 'Create Transaction';
+            $data['customers'] = $this->customerModel->findAll();
+            $data['cars'] = $this->carModel->findAll();
+            $data['salespersons'] = $this->salesPersonModel->findAll();
+        
 
-          return view('transaction/create', $data);
-      }
+            return view('transaction/create', $data);
+        }
 
-      // Store the newly created transaction
-      public function store()
-      {
-          // Get the input data
-          $customerId = $this->request->getPost('customer_id');
-          $carId = $this->request->getPost('car_id');
-          $salespersonId = $this->request->getPost('salesperson_id');
-          $price = $this->request->getPost('price');
-      
-          // Store the transaction in the database (you need to create the transaction model)
-          $transactionData = [
-              'customer_id' => $customerId,
-              'car_id' => $carId,
-              'salesperson_id' => $salespersonId,
-              'price' => $price
-          ];
-      
-          // Assuming you have a TransactionModel.php model, create a new instance and save the data
-          $transactionModel = new TransactionModel();
-          $transactionModel->insert($transactionData);
-      
-          // Redirect to the transaction list page or show a success message
-          return redirect()->to('/transaction')->with('success', 'Transaction created successfully.');
-      }
+        // Store the newly created transaction
+        public function store()
+        {
+            // Get the input data
+            $customerId = $this->request->getPost('customer_id');
+            $carId = $this->request->getPost('car_id');
+            $salespersonId = $this->request->getPost('salesperson_id');
+            $price = $this->request->getPost('price');
+        
+            // Store the transaction in the database (you need to create the transaction model)
+            $transactionData = [
+                'customer_id' => $customerId,
+                'car_id' => $carId,
+                'salesperson_id' => $salespersonId,
+                'price' => $price
+            ];
+        
+            // Assuming you have a TransactionModel.php model, create a new instance and save the data
+            $transactionModel = new TransactionModel();
+            $transactionModel->insert($transactionData);
+        
+            // Redirect to the transaction list page or show a success message
+            return redirect()->to('/transaction')->with('success', 'Transaction created successfully.');
+        }
 
-      // Display the edit transaction form
-      public function edit($id)
-      {
-          $transactionModel = new TransactionModel();
-          $data['title'] = 'Edit Data';
-          $data['transaction'] = $transactionModel->find($id);
-          $data['customers'] = $this->customerModel->findAll();
-          $data['cars'] = $this->carModel->findAll();
-          $data['salespersons'] = $this->salesPersonModel->findAll();
+        // Display the edit transaction form
+        public function edit($id)
+        {
+            $transactionModel = new TransactionModel();
+            $data['title'] = 'Edit Data';
+            $data['transaction'] = $transactionModel->find($id);
+            $data['customers'] = $this->customerModel->findAll();
+            $data['cars'] = $this->carModel->findAll();
+            $data['salespersons'] = $this->salesPersonModel->findAll();
 
-          return view('transaction/edit', $data);
-      }
+            return view('transaction/edit', $data);
+        }
 
-      // Update the existing transaction
-      public function update($id)
-      {
-          // Get the input data
-          $customerId = $this->request->getPost('customer_id');
-          $carId = $this->request->getPost('car_id');
-          $salespersonId = $this->request->getPost('salesperson_id');
-          $price = $this->request->getPost('price');
+        // Update the existing transaction
+        public function update($id)
+        {
+            // Get the input data
+            $customerId = $this->request->getPost('customer_id');
+            $carId = $this->request->getPost('car_id');
+            $salespersonId = $this->request->getPost('salesperson_id');
+            $price = $this->request->getPost('price');
 
-          // Update the transaction in the database
-          $transactionData = [
-              'customer_id' => $customerId,
-              'car_id' => $carId,
-              'salesperson_id' => $salespersonId,
-              'price' => $price
-          ];
+            // Update the transaction in the database
+            $transactionData = [
+                'customer_id' => $customerId,
+                'car_id' => $carId,
+                'salesperson_id' => $salespersonId,
+                'price' => $price
+            ];
 
-          // Assuming you have a TransactionModel.php model, update the transaction data
-          $transactionModel = new TransactionModel();
-          $transactionModel->update($id, $transactionData);
+            // Assuming you have a TransactionModel.php model, update the transaction data
+            $transactionModel = new TransactionModel();
+            $transactionModel->update($id, $transactionData);
 
-          // Redirect to the transaction list page or show a success message
-          return redirect()->to('/transaction')->with('success', 'Transaction updated successfully.');
-      }
+            // Redirect to the transaction list page or show a success message
+            return redirect()->to('/transaction')->with('success', 'Transaction updated successfully.');
+        }
 
-      // Delete a transaction
-      public function delete($id)
-      {
-          // Assuming you have a TransactionModel.php model, delete the transaction
-          $transactionModel = new TransactionModel();
-          $transactionModel->delete($id);
+        // Delete a transaction
+        public function delete($id)
+        {
+            // Assuming you have a TransactionModel.php model, delete the transaction
+            $transactionModel = new TransactionModel();
+            $transactionModel->delete($id);
 
-          // Redirect to the transaction list page or show a success message
-          return redirect()->to('/transaction')->with('success', 'Transaction deleted successfully.');
-      }
+            // Redirect to the transaction list page or show a success message
+            return redirect()->to('/transaction')->with('success', 'Transaction deleted successfully.');
+        }
 
-      public function index2()
-      {
-          $transactionModel = new TransactionModel();
+        public function index2()
+        {
+            $transactionModel = new TransactionModel();
 
-          // Get total sales
-          $totalSales = $transactionModel->selectSum('price')->get()->getRowArray()['price'];
+            // Get total sales
+            $totalSales = $transactionModel->selectSum('price')->get()->getRowArray()['price'];
 
-          // Calculate profit (10% of total sales)
-          $profit = $totalSales * 0.1;
+            // Calculate profit (10% of total sales)
+            $profit = $totalSales * 0.1;
 
-          // Get transactions for the selected month
-          $selectedMonth = $this->request->getGet('month');
-          $transactions = $transactionModel->where('MONTH(created_at)', $selectedMonth)->findAll();
+            // Get transactions for the selected month
+            $selectedMonth = $this->request->getGet('month');
+            $transactions = $transactionModel->where('MONTH(created_at)', $selectedMonth)->findAll();
 
-          // Pass the data to the view
-          $data = [
-              'totalSales' => $totalSales,
-              'profit' => $profit,
-              'transactions' => $transactions,
-              'title' => 'asd'
-          ];
+            // Pass the data to the view
+            $data = [
+                'totalSales' => $totalSales,
+                'profit' => $profit,
+                'transactions' => $transactions,
+                'title' => 'asd'
+            ];
 
-          return view('sales/dashboard', $data);
-      }
-      public function find()
-      {
-          $keyword = $this->request->getPost('keyword');
-          $transactionModel = new TransactionModel();
+            return view('sales/dashboard', $data);
+        }
+        public function find()
+        {
+            $keyword = $this->request->getPost('keyword');
+            $transactionModel = new TransactionModel();
 
-          $data = [
-              'title' => 'Edit Sales Person',
-              'transactions' => $transactionModel->search($keyword)
-          ];
+            $data = [
+                'title' => 'Edit Sales Person',
+                'transactions' => $transactionModel->search($keyword)
+            ];
 
-          return view('transaction/index', $data);
-      }
-  }
-  ```
+            return view('transaction/index', $data);
+        }
+    }
+    ```
 <br>
 
 
@@ -900,1579 +900,1579 @@ Disini model yang kita buat ada `CarsController.php`, `CustomerController.php`, 
 * Buat folder `app/Views/cars` dan buat file ini:<p>
 
   + <b>create.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Input New Cars</h1>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Input New Cars</h1>
 
-            <form method="post" action="/car/store" enctype="multipart/form-data">
+                <form method="post" action="/car/store" enctype="multipart/form-data">
 
 
-                <div class="row mb-3">
-                    <label for="name" class="col-sm-2 form-label">Name:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 form-label">Name:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="type" class="col-sm-2 form-label">Tipe</label>
-                    <div class="col-sm-5">
-                        <input type="type" name="type" id="type" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="type" class="col-sm-2 form-label">Tipe</label>
+                        <div class="col-sm-5">
+                            <input type="type" name="type" id="type" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="picture" class="col-sm-2 form-label">Image</label>
-                    <div class="col-sm-5">
-                        <input class="form-control" type="file" id="picture" name="picture" required>
+                    <div class="row mb-3">
+                        <label for="picture" class="col-sm-2 form-label">Image</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" type="file" id="picture" name="picture" required>
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="description" class="col-sm-2 form-label">Description</label>
-                    <div class="col-sm-5">
-                        <textarea name="description" id="description" class="form-control" required></textarea>
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-2 form-label">Description</label>
+                        <div class="col-sm-5">
+                            <textarea name="description" id="description" class="form-control" required></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="price" class="col-sm-2 form-label">Price</label>
-                    <div class="col-sm-5">
-                        <input type="number" name="price" id="price" class="form-control" required oninput="formatCurrency(this)">
-                        <div id="currency-display" class="form-control" style="border: none; pointer-events: none;"></div>
+                    <div class="row mb-3">
+                        <label for="price" class="col-sm-2 form-label">Price</label>
+                        <div class="col-sm-5">
+                            <input type="number" name="price" id="price" class="form-control" required oninput="formatCurrency(this)">
+                            <div id="currency-display" class="form-control" style="border: none; pointer-events: none;"></div>
+                        </div>
+                        <div class="col-sm-5">
+                        </div>
                     </div>
-                    <div class="col-sm-5">
-                    </div>
-                </div>
 
-                <script>
-                    function formatCurrency(input) {
-                        const price = input.value;
-                        const formattedPrice = new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }).format(price);
-                        document.getElementById('currency-display').innerText = formattedPrice;
-                    }
-                </script>
+                    <script>
+                        function formatCurrency(input) {
+                            const price = input.value;
+                            const formattedPrice = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(price);
+                            document.getElementById('currency-display').innerText = formattedPrice;
+                        }
+                    </script>
 
 
 
-                <button type="submit" class="btn btn-primary">Add Cars</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Add Cars</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>edit.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Edit Cars Data</h1>
-            <form method="post" action="/car/update/<?= $car['id']; ?>" enctype="multipart/form-data">
-                <div class="row mb-3">
-                    <label for="name" class="form-label col-sm-2">Name</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" value="<?= $car['name']; ?>" class="form-control" required>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Edit Cars Data</h1>
+                <form method="post" action="/car/update/<?= $car['id']; ?>" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <label for="name" class="form-label col-sm-2">Name</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" value="<?= $car['name']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="type" class="form-label col-sm-2">Type</label>
-                    <div class="col-sm-5">
-                        <input type="type" name="type" id="type" value="<?= $car['type']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="type" class="form-label col-sm-2">Type</label>
+                        <div class="col-sm-5">
+                            <input type="type" name="type" id="type" value="<?= $car['type']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="description" class="col-sm-2 form-label">Description</label>
-                    <div class="col-sm-5">
-                        <textarea name="description" id="description" class="form-control" required><?= $car['description']; ?></textarea>
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-2 form-label">Description</label>
+                        <div class="col-sm-5">
+                            <textarea name="description" id="description" class="form-control" required><?= $car['description']; ?></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="price" class="form-label col-sm-2">Price</label>
-                    <div class="col-sm-5">
-                        <input type="type" name="price" id="price" value="<?= $car['price']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="price" class="form-label col-sm-2">Price</label>
+                        <div class="col-sm-5">
+                            <input type="type" name="price" id="price" value="<?= $car['price']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Update Cars</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Update Cars</button>
+                </form>
 
 
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>index.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
-    <br>
-    <div class="d-flex justify-content-center">
-        <h1>Cars List</h1>
-    </div>
+    <div class="container">
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1>Cars List</h1>
+        </div>
 
 
-    <div class="d-flex justify-content-between">
-        <a class="btn btn-success" href="/car/create">Add New Cars</a>
-        <form action="/car/find" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <a class="btn btn-info" href="/car" role="button">Reset</a>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-success" href="/car/create">Add New Cars</a>
+            <form action="/car/find" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="submit">Search</button>
+                        <a class="btn btn-info" href="/car" role="button">Reset</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
+
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Picture</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($cars as $index => $customer) : ?>
+                    <tr class="text-center">
+                        <td tyle="white-space: nowrap;"><?= $index + 1; ?></td>
+                        <td tyle="white-space: nowrap;"><?= $customer['name']; ?></td>
+                        <td tyle="white-space: nowrap;">
+
+                            <img class="img-fluid" src="/car_img/<?= $customer['picture']; ?>" alt="Car Picture" width="250px">
+
+                        </td>
+                        <td tyle="white-space: nowrap;"><?= $customer['type']; ?></td>
+                        <td><?= $customer['description']; ?></td>
+
+                        <td style="white-space: nowrap;">Rp <?= number_format($customer['price'], 0, ',', '.'); ?></td>
+
+
+                        <td style="white-space: nowrap;">
+                            <a href="/car/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="/car/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 
-    <?php if (session()->has('success')) : ?>
-        <div class="alert alert-success"><?= session('success') ?></div>
-    <?php endif; ?>
-
-    <table class="table">
-        <thead>
-            <tr class="text-center">
-                <th>No</th>
-                <th>Name</th>
-                <th>Picture</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($cars as $index => $customer) : ?>
-                <tr class="text-center">
-                    <td tyle="white-space: nowrap;"><?= $index + 1; ?></td>
-                    <td tyle="white-space: nowrap;"><?= $customer['name']; ?></td>
-                    <td tyle="white-space: nowrap;">
-
-                        <img class="img-fluid" src="/car_img/<?= $customer['picture']; ?>" alt="Car Picture" width="250px">
-
-                    </td>
-                    <td tyle="white-space: nowrap;"><?= $customer['type']; ?></td>
-                    <td><?= $customer['description']; ?></td>
-
-                    <td style="white-space: nowrap;">Rp <?= number_format($customer['price'], 0, ',', '.'); ?></td>
-
-
-                    <td style="white-space: nowrap;">
-                        <a href="/car/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="/car/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/customer` dan buat file ini:<p>
 
   + <b>create.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Add New Customer</h1>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Add New Customer</h1>
 
-            <form method="post" action="/customer/store">
+                <form method="post" action="/customer/store">
 
 
-                <div class="row mb-3">
-                    <label for="name" class="col-sm-2 form-label">Name:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 form-label">Name:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
 
 
 
-                <div class="row mb-3">
-                    <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="email" class="col-sm-2 form-label">Email:</label>
-                    <div class="col-sm-5">
-                        <input type="email" name="email" id="email" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-2 form-label">Email:</label>
+                        <div class="col-sm-5">
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="address" class="col-sm-2 form-label">Address:</label>
-                    <div class="col-sm-5">
-                        <textarea name="address" id="address" class="form-control" required></textarea>
+                    <div class="row mb-3">
+                        <label for="address" class="col-sm-2 form-label">Address:</label>
+                        <div class="col-sm-5">
+                            <textarea name="address" id="address" class="form-control" required></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Add Customer</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Add Customer</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>edit.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Edit Customers</h1>
-            <form method="post" action="/customer/update/<?= $customer['id']; ?>">
-                <div class="row mb-3">
-                    <label for="name" class="form-label col-sm-2">Name:</label>
-                    <div class="col-sm-5">
-                    <input type="text" name="name" id="name" value="<?= $customer['name']; ?>" class="form-control" required>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Edit Customers</h1>
+                <form method="post" action="/customer/update/<?= $customer['id']; ?>">
+                    <div class="row mb-3">
+                        <label for="name" class="form-label col-sm-2">Name:</label>
+                        <div class="col-sm-5">
+                        <input type="text" name="name" id="name" value="<?= $customer['name']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
-                    <div class="col-sm-5">
-                    <input type="text" name="phone_number" id="phone_number" value="<?= $customer['phone_number']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
+                        <div class="col-sm-5">
+                        <input type="text" name="phone_number" id="phone_number" value="<?= $customer['phone_number']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="email" class="form-label col-sm-2">Email:</label>
-                    <div class="col-sm-5">
-                    <input type="email" name="email" id="email" value="<?= $customer['email']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="email" class="form-label col-sm-2">Email:</label>
+                        <div class="col-sm-5">
+                        <input type="email" name="email" id="email" value="<?= $customer['email']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="address" class="form-label col-sm-2">Address:</label>
-                    <div class="col-sm-5">
-                    <textarea name="address" id="address" class="form-control" required><?= $customer['address']; ?></textarea>
+                    <div class="row mb-3">
+                        <label for="address" class="form-label col-sm-2">Address:</label>
+                        <div class="col-sm-5">
+                        <textarea name="address" id="address" class="form-control" required><?= $customer['address']; ?></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Update Customer</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Update Customer</button>
+                </form>
 
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>index.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
+    <div class="container">
 
 
-    <br>
-    <div class="d-flex justify-content-center">
-        <h1>Customer List</h1>
-    </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1>Customer List</h1>
+        </div>
 
-    
-    <div class="d-flex justify-content-between">
-    <a class="btn btn-success" href="/customer/create">Add New Customer</a>
-        <form action="/customer/find" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <a class="btn btn-info" href="/customer" role="button">Reset</a>
+        
+        <div class="d-flex justify-content-between">
+        <a class="btn btn-success" href="/customer/create">Add New Customer</a>
+            <form action="/customer/find" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="submit">Search</button>
+                        <a class="btn btn-info" href="/customer" role="button">Reset</a>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <?php if (session()->has('success')) : ?>
-        <div class="alert alert-success"><?= session('success') ?></div>
-    <?php endif; ?>
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($customers as $index => $customer) : ?>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td><?= $index + 1; ?></td>
-                    <td><?= $customer['name']; ?></td>
-                    <td><?= $customer['phone_number']; ?></td>
-                    <td><?= $customer['email']; ?></td>
-                    <td><?= $customer['address']; ?></td>
-                    <td>
-                        <a href="/customer/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="/customer/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($customers as $index => $customer) : ?>
+                    <tr>
+                        <td><?= $index + 1; ?></td>
+                        <td><?= $customer['name']; ?></td>
+                        <td><?= $customer['phone_number']; ?></td>
+                        <td><?= $customer['email']; ?></td>
+                        <td><?= $customer['address']; ?></td>
+                        <td>
+                            <a href="/customer/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="/customer/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    </table>
+        </table>
 
 
 
 
-</div>
-<?= $this->endSection(); ?>
-```
+    </div>
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/Layout` dan buat file ini:<p>
 
   + <b>footer.php</b>
-```php
-    <!-- Optional JavaScript; choose one of the two! -->
+    ```php
+        <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-  </body>
-</html>
-```
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        -->
+      </body>
+    </html>
+    ```
 <br>
 
 
   + <b>navbar.php</b>
-```php
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    ```php
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <div class="container">
-            <a class="navbar-brand" href="/">Dinka Dealer</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/sales">Dashboard</a>
-                    </li>
+            <div class="container">
+                <a class="navbar-brand" href="/">Dinka Dealer</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/sales-person">Sales Person</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/customer">Customer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/car">Cars</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/transaction">Transaction</a>
-                    </li>
-                    
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">Home Page</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="logout">Logout</a>
-                    </li>
-                </ul>
+                            <a class="nav-link active" aria-current="page" href="/sales">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sales-person">Sales Person</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/customer">Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/car">Cars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/transaction">Transaction</a>
+                        </li>
+                        
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/">Home Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="logout">Logout</a>
+                        </li>
+                    </ul>
 
+                </div>
             </div>
-        </div>
-        
-</nav>
-```
+            
+    </nav>
+    ```
 <br>
 
 
   + <b>templete.php</b>
-```php
-<!doctype html>
-<html lang="en">
+    ```php
+    <!doctype html>
+    <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- My CSS -->
-    <link rel="stylesheet" href="/style.css">
+        <!-- My CSS -->
+        <link rel="stylesheet" href="/style.css">
 
-    <title> <?= $title; ?> </title>
-</head>
+        <title> <?= $title; ?> </title>
+    </head>
 
-<body>
+    <body>
 
-    <?= $this->include('Layout/navbar') ?>
+        <?= $this->include('Layout/navbar') ?>
 
-    <?= $this->renderSection('content') ?>
+        <?= $this->renderSection('content') ?>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+        <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-</body>
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        -->
+    </body>
 
-</html>
-```
+    </html>
+    ```
 <br>
 
 
 * Buat folder `app/Views/Pages` dan buat file ini:<p>
 
   + <b>about.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
-<h1>Iman Setiawan</h1>
-<h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, libero. Officiis, impedit, vel commodi assumenda, magnam deserunt non veritatis sunt ducimus modi fugiat sapiente repellendus fugit? Odio facere atque quo.</h2>
-</div>
+    <div class="container">
+    <h1>Iman Setiawan</h1>
+    <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, libero. Officiis, impedit, vel commodi assumenda, magnam deserunt non veritatis sunt ducimus modi fugiat sapiente repellendus fugit? Odio facere atque quo.</h2>
+    </div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>contact.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
 
-<?= $this->section('content'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Contact Us</h1>
-            <?php foreach ($alamat as $a) : ?>
-                <ul>
-                    <li><?= $a['tipe']; ?></li>
-                    <li><?= $a['alamat']; ?></li>
-                    <li><?= $a['kota']; ?></li>
-                </ul>
-            <?php endforeach; ?>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Contact Us</h1>
+                <?php foreach ($alamat as $a) : ?>
+                    <ul>
+                        <li><?= $a['tipe']; ?></li>
+                        <li><?= $a['alamat']; ?></li>
+                        <li><?= $a['kota']; ?></li>
+                    </ul>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>home.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
-<h1>Dashbore</h1>
+    <div class="container">
+    <h1>Dashbore</h1>
 
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/sales` dan buat file ini:<p>
 
   + <b>dashboard.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<div class="container">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <br>
-    <div>
-        <h1 class="row justify-content-center">Dashboard</h1>
-    </div>
-    <h4>Sales Graph</h4>
-    <button class="btn btn-primary" onclick="showGraph(3)">Last 3 Days</button>
-    <button class="btn btn-primary" onclick="showGraph(7)">Last 7 Days</button>
-    <button class="btn btn-primary" onclick="showGraph(30)">Last 30 Days</button>
-    <button class="btn btn-primary" onclick="showGraph(365)">Last 1 Year</button>
-
-    <canvas id="chart"></canvas>
-
-
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
     <div class="container">
-        <div class="row mt-4">
-            <div class="col">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Duration</th>
-                            <th>Total Sales</th>
-                            <th>Profit Margin</th>
-                            <th>Total Profit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Last 3 Days</td>
-                            <td id="totalSales3Days">-</td>
-                            <td>15%</td>
-                            <td id="totalProfit3Days">-</td>
-                        </tr>
-                        <tr>
-                            <td>Last 7 Days</td>
-                            <td id="totalSales7Days">-</td>
-                            <td>15%</td>
-                            <td id="totalProfit7Days">-</td>
-                        </tr>
-                        <tr>
-                            <td>Last 30 Days</td>
-                            <td id="totalSales30Days">-</td>
-                            <td>15%</td>
-                            <td id="totalProfit30Days">-</td>
-                        </tr>
-                    </tbody>
-                </table>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <br>
+        <div>
+            <h1 class="row justify-content-center">Dashboard</h1>
+        </div>
+        <h4>Sales Graph</h4>
+        <button class="btn btn-primary" onclick="showGraph(3)">Last 3 Days</button>
+        <button class="btn btn-primary" onclick="showGraph(7)">Last 7 Days</button>
+        <button class="btn btn-primary" onclick="showGraph(30)">Last 30 Days</button>
+        <button class="btn btn-primary" onclick="showGraph(365)">Last 1 Year</button>
+
+        <canvas id="chart"></canvas>
+
+
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Duration</th>
+                                <th>Total Sales</th>
+                                <th>Profit Margin</th>
+                                <th>Total Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Last 3 Days</td>
+                                <td id="totalSales3Days">-</td>
+                                <td>15%</td>
+                                <td id="totalProfit3Days">-</td>
+                            </tr>
+                            <tr>
+                                <td>Last 7 Days</td>
+                                <td id="totalSales7Days">-</td>
+                                <td>15%</td>
+                                <td id="totalProfit7Days">-</td>
+                            </tr>
+                            <tr>
+                                <td>Last 30 Days</td>
+                                <td id="totalSales30Days">-</td>
+                                <td>15%</td>
+                                <td id="totalProfit30Days">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        // Retrieve the data passed from the controller
-        var prices = <?php echo json_encode($prices); ?>;
-        var dates = <?php echo json_encode($dates); ?>;
+        <script>
+            // Retrieve the data passed from the controller
+            var prices = <?php echo json_encode($prices); ?>;
+            var dates = <?php echo json_encode($dates); ?>;
 
-        // Format the dates without the time
-        var formattedDates = dates.map(function(date) {
-            var dateObj = new Date(date);
-            return dateObj.toLocaleDateString(); // Format date to local string without time
-        });
+            // Format the dates without the time
+            var formattedDates = dates.map(function(date) {
+                var dateObj = new Date(date);
+                return dateObj.toLocaleDateString(); // Format date to local string without time
+            });
 
-        // Format the value to Indonesian Rupiah currency format
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-            }).format(value);
-        }
+            // Format the value to Indonesian Rupiah currency format
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(value);
+            }
 
-        // Calculate total sales for each duration
-        function calculateTotalSales(prices) {
-            var total = prices.reduce(function(sum, price) {
-                var priceValue = parseFloat(price.replace(/[^\d.-]/g, ''));
-                return sum + priceValue;
-            }, 0);
-            return total;
-        }
+            // Calculate total sales for each duration
+            function calculateTotalSales(prices) {
+                var total = prices.reduce(function(sum, price) {
+                    var priceValue = parseFloat(price.replace(/[^\d.-]/g, ''));
+                    return sum + priceValue;
+                }, 0);
+                return total;
+            }
 
-        // Calculate total profit for each duration (15% of total sales)
-        function calculateTotalProfit(totalSales) {
-            var profit = (totalSales * 0.15).toFixed(0);
-            return formatCurrency(profit);
-        }
+            // Calculate total profit for each duration (15% of total sales)
+            function calculateTotalProfit(totalSales) {
+                var profit = (totalSales * 0.15).toFixed(0);
+                return formatCurrency(profit);
+            }
 
-        // Calculate total sales for each duration
-        var totalSales3Days = calculateTotalSales(prices.slice(-3));
-        var totalSales7Days = calculateTotalSales(prices.slice(-7));
-        var totalSales30Days = calculateTotalSales(prices.slice(-30));
+            // Calculate total sales for each duration
+            var totalSales3Days = calculateTotalSales(prices.slice(-3));
+            var totalSales7Days = calculateTotalSales(prices.slice(-7));
+            var totalSales30Days = calculateTotalSales(prices.slice(-30));
 
-        // Update the table with the formatted total sales values
-        document.getElementById("totalSales3Days").textContent = formatCurrency(totalSales3Days);
-        document.getElementById("totalSales7Days").textContent = formatCurrency(totalSales7Days);
-        document.getElementById("totalSales30Days").textContent = formatCurrency(totalSales30Days);
+            // Update the table with the formatted total sales values
+            document.getElementById("totalSales3Days").textContent = formatCurrency(totalSales3Days);
+            document.getElementById("totalSales7Days").textContent = formatCurrency(totalSales7Days);
+            document.getElementById("totalSales30Days").textContent = formatCurrency(totalSales30Days);
 
-        // Update the table with the calculated total profit values
-        document.getElementById("totalProfit3Days").textContent = calculateTotalProfit(totalSales3Days);
-        document.getElementById("totalProfit7Days").textContent = calculateTotalProfit(totalSales7Days);
-        document.getElementById("totalProfit30Days").textContent = calculateTotalProfit(totalSales30Days);
+            // Update the table with the calculated total profit values
+            document.getElementById("totalProfit3Days").textContent = calculateTotalProfit(totalSales3Days);
+            document.getElementById("totalProfit7Days").textContent = calculateTotalProfit(totalSales7Days);
+            document.getElementById("totalProfit30Days").textContent = calculateTotalProfit(totalSales30Days);
 
-        // Create a chart using Chart.js
-        var ctx = document.getElementById('chart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: formattedDates, // Use the formatted dates without time
-                datasets: [{
-                    label: 'Sales',
-                    data: prices,
-                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Sales Transaction',
-                        position: 'top',
-                        align: 'center',
-                        font: {
-                            size: 16
-                        }
-                    }
+            // Create a chart using Chart.js
+            var ctx = document.getElementById('chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: formattedDates, // Use the formatted dates without time
+                    datasets: [{
+                        label: 'Sales',
+                        data: prices,
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
                 },
-                scales: {
-                    x: {
-                        display: true,
-                        reverse: false, // Display latest day on the right side
+                options: {
+                    responsive: true,
+                    plugins: {
                         title: {
                             display: true,
-                            text: 'Date'
-                        },
-                        animation: {
-                            from: "right" // Start the animation from the right
+                            text: 'Sales Transaction',
+                            position: 'top',
+                            align: 'center',
+                            font: {
+                                size: 16
+                            }
                         }
                     },
-                    y: {
-                        display: true,
-                        title: {
+                    scales: {
+                        x: {
                             display: true,
-                            text: 'Sales'
+                            reverse: false, // Display latest day on the right side
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            },
+                            animation: {
+                                from: "right" // Start the animation from the right
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Sales'
+                            }
                         }
-                    }
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(context) {
-                            var label = context.dataset.label || '';
-                            var value = context.dataset.data[context.dataIndex];
-                            return label + ': ' + formatCurrency(value);
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.dataset.label || '';
+                                var value = context.dataset.data[context.dataIndex];
+                                return label + ': ' + formatCurrency(value);
+                            }
                         }
                     }
                 }
+            });
+
+            function showGraph(days) {
+                // Update the chart data based on the selected number of days
+                var filteredPrices = prices.slice(-days);
+                var filteredDates = formattedDates.slice(-days);
+
+                chart.data.labels = filteredDates;
+                chart.data.datasets[0].data = filteredPrices;
+                chart.update();
+
+                // Update the table with total sales and total profit values
+                var totalSales = calculateTotalSales(filteredPrices);
+                var totalProfit = calculateTotalProfit(totalSales);
+
+                if (days === 3) {
+                    document.getElementById("totalSales3Days").textContent = formatCurrency(totalSales);
+                    document.getElementById("totalProfit3Days").textContent = totalProfit;
+                } else if (days === 7) {
+                    document.getElementById("totalSales7Days").textContent = formatCurrency(totalSales);
+                    document.getElementById("totalProfit7Days").textContent = totalProfit;
+                } else if (days === 30) {
+                    document.getElementById("totalSales30Days").textContent = formatCurrency(totalSales);
+                    document.getElementById("totalProfit30Days").textContent = totalProfit;
+                }
             }
-        });
+        </script>
 
-        function showGraph(days) {
-            // Update the chart data based on the selected number of days
-            var filteredPrices = prices.slice(-days);
-            var filteredDates = formattedDates.slice(-days);
-
-            chart.data.labels = filteredDates;
-            chart.data.datasets[0].data = filteredPrices;
-            chart.update();
-
-            // Update the table with total sales and total profit values
-            var totalSales = calculateTotalSales(filteredPrices);
-            var totalProfit = calculateTotalProfit(totalSales);
-
-            if (days === 3) {
-                document.getElementById("totalSales3Days").textContent = formatCurrency(totalSales);
-                document.getElementById("totalProfit3Days").textContent = totalProfit;
-            } else if (days === 7) {
-                document.getElementById("totalSales7Days").textContent = formatCurrency(totalSales);
-                document.getElementById("totalProfit7Days").textContent = totalProfit;
-            } else if (days === 30) {
-                document.getElementById("totalSales30Days").textContent = formatCurrency(totalSales);
-                document.getElementById("totalProfit30Days").textContent = totalProfit;
-            }
-        }
-    </script>
-
-</div>
-<?= $this->endSection(); ?>
-```
+    </div>
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/sales-person` dan buat file ini:<p>
 
   + <b>create.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Add New Sales Person</h1>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Add New Sales Person</h1>
 
-            <form method="post" action="/sales-person/store">
+                <form method="post" action="/sales-person/store">
 
 
-                <div class="row mb-3">
-                    <label for="name" class="col-sm-2 form-label">Name:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 form-label">Name:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="row mb-3">
-                    <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="email" class="col-sm-2 form-label">Email:</label>
-                    <div class="col-sm-5">
-                        <input type="email" name="email" id="email" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-2 form-label">Email:</label>
+                        <div class="col-sm-5">
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Add Customer</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Add Customer</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>edit.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Edit Sales Person</h1>
-            <form method="post" action="/sales-person/update/<?= $salesperson['id']; ?>">
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Edit Sales Person</h1>
+                <form method="post" action="/sales-person/update/<?= $salesperson['id']; ?>">
 
-                
-                <div class="row mb-3">
-                    <label for="name" class="form-label col-sm-2">Name:</label>
-                    <div class="col-sm-5">
-                    <input type="text" name="name" id="name" value="<?= $salesperson['name']; ?>" class="form-control" required>
+                    
+                    <div class="row mb-3">
+                        <label for="name" class="form-label col-sm-2">Name:</label>
+                        <div class="col-sm-5">
+                        <input type="text" name="name" id="name" value="<?= $salesperson['name']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
-                    <div class="col-sm-5">
-                    <input type="text" name="phone_number" id="phone_number" value="<?= $salesperson['phone_number']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
+                        <div class="col-sm-5">
+                        <input type="text" name="phone_number" id="phone_number" value="<?= $salesperson['phone_number']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="email" class="form-label col-sm-2">Email:</label>
-                    <div class="col-sm-5">
-                    <input type="email" name="email" id="email" value="<?= $salesperson['email']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="email" class="form-label col-sm-2">Email:</label>
+                        <div class="col-sm-5">
+                        <input type="email" name="email" id="email" value="<?= $salesperson['email']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
 
-                <button type="submit" class="btn btn-primary">Update sales person</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Update sales person</button>
+                </form>
 
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>index.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
-    <br>
-    <div class="d-flex justify-content-center">
-        <h1>Sales Person List</h1>
-    </div>
+    <div class="container">
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1>Sales Person List</h1>
+        </div>
 
 
-    <div class="d-flex justify-content-between">
-        <a class="btn btn-success" href="/sales-person/create">Add New Sales Person</a>
-        <form action="/sales-person/find" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <a class="btn btn-info ml-2" href="/sales-person" role="button">Reset</a>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-success" href="/sales-person/create">Add New Sales Person</a>
+            <form action="/sales-person/find" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="submit">Search</button>
+                        <a class="btn btn-info ml-2" href="/sales-person" role="button">Reset</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($agents as $index => $customer) : ?>
+                    <tr>
+                        <td><?= $index + 1; ?></td>
+                        <td><?= $customer['name']; ?></td>
+                        <td><?= $customer['phone_number']; ?></td>
+                        <td><?= $customer['email']; ?></td>
+                        <td>
+                            <a href="/sales-person/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="/sales-person/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 
-    <?php if (session()->has('success')) : ?>
-        <div class="alert alert-success"><?= session('success') ?></div>
-    <?php endif; ?>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($agents as $index => $customer) : ?>
-                <tr>
-                    <td><?= $index + 1; ?></td>
-                    <td><?= $customer['name']; ?></td>
-                    <td><?= $customer['phone_number']; ?></td>
-                    <td><?= $customer['email']; ?></td>
-                    <td>
-                        <a href="/sales-person/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="/sales-person/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/transaction` dan buat file ini:<p>
 
   + <b>create.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
 
-    <!-- Display the create transaction form -->
-    <h2>Create Transaction</h2>
+        <!-- Display the create transaction form -->
+        <h2>Create Transaction</h2>
 
-    <?php if (session()->has('error')) : ?>
-        <div class="alert alert-danger"><?= session('error') ?></div>
-    <?php endif; ?>
+        <?php if (session()->has('error')) : ?>
+            <div class="alert alert-danger"><?= session('error') ?></div>
+        <?php endif; ?>
 
-    <form method="post" action="/transaction/store" class="my-4">
+        <form method="post" action="/transaction/store" class="my-4">
 
 
-        <div class="row mb-3">
-            <label for="customer_id" class="col-sm-2 form-label">Customer:</label>
-            <div class="col-sm-5">
-                <select name="customer_id" id="customer_id" class="form-select" required>
-                    <option value="" disabled selected>Select a customer</option> <!-- Placeholder option -->
-                    <?php foreach ($customers as $customer) : ?>
-                        <option value="<?= $customer['name'] ?>"><?= $customer['name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row mb-3">
+                <label for="customer_id" class="col-sm-2 form-label">Customer:</label>
+                <div class="col-sm-5">
+                    <select name="customer_id" id="customer_id" class="form-select" required>
+                        <option value="" disabled selected>Select a customer</option> <!-- Placeholder option -->
+                        <?php foreach ($customers as $customer) : ?>
+                            <option value="<?= $customer['name'] ?>"><?= $customer['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="car_id" class="col-sm-2 form-label">Car:</label>
-            <div class="col-sm-5">
-                <select name="car_id" id="car_id" class="form-select" required>
-                    <option value="" disabled selected>Select a car</option> <!-- Placeholder option -->
-                    <?php foreach ($cars as $car) : ?>
-                        <option value="<?= $car['name'] ?>" data-price="<?= $car['price'] ?>"><?= $car['name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row mb-3">
+                <label for="car_id" class="col-sm-2 form-label">Car:</label>
+                <div class="col-sm-5">
+                    <select name="car_id" id="car_id" class="form-select" required>
+                        <option value="" disabled selected>Select a car</option> <!-- Placeholder option -->
+                        <?php foreach ($cars as $car) : ?>
+                            <option value="<?= $car['name'] ?>" data-price="<?= $car['price'] ?>"><?= $car['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="salesperson_id" class="col-sm-2 form-label">Salesperson:</label>
-            <div class="col-sm-5">
-                <select name="salesperson_id" id="salesperson_id" class="form-select" required>
-                    <option value="" disabled selected>Select a salesperson</option> <!-- Placeholder option -->
-                    <?php foreach ($salespersons as $salesperson) : ?>
-                        <option value="<?= $salesperson['name'] ?>"><?= $salesperson['name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row mb-3">
+                <label for="salesperson_id" class="col-sm-2 form-label">Salesperson:</label>
+                <div class="col-sm-5">
+                    <select name="salesperson_id" id="salesperson_id" class="form-select" required>
+                        <option value="" disabled selected>Select a salesperson</option> <!-- Placeholder option -->
+                        <?php foreach ($salespersons as $salesperson) : ?>
+                            <option value="<?= $salesperson['name'] ?>"><?= $salesperson['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="price" class="col-sm-2 form-label">Price:</label>
-            <div class="col-sm-5">
-                <input type="text" name="price" id="price" class="form-control" readonly>
+            <div class="row mb-3">
+                <label for="price" class="col-sm-2 form-label">Price:</label>
+                <div class="col-sm-5">
+                    <input type="text" name="price" id="price" class="form-control" readonly>
+                </div>
             </div>
-        </div>
-        <div id="priceInIDR" class="row mb-3">
-            <label for="priceIDR" class="col-sm-2 form-label"></label>
-            <div class="col-sm-5">
-                <input type="text" id="priceIDR" class="form-control" readonly>
+            <div id="priceInIDR" class="row mb-3">
+                <label for="priceIDR" class="col-sm-2 form-label"></label>
+                <div class="col-sm-5">
+                    <input type="text" id="priceIDR" class="form-control" readonly>
+                </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Create Transaction</button>
-        <a class="btn btn-warning" href="/transaction">Back to Transaction List</a>
+            <button type="submit" class="btn btn-primary">Create Transaction</button>
+            <a class="btn btn-warning" href="/transaction">Back to Transaction List</a>
 
 
-    </form>
+        </form>
 
-    <script>
-        // Get the customer selection element
-        var customerSelect = document.getElementById('customer_id');
+        <script>
+            // Get the customer selection element
+            var customerSelect = document.getElementById('customer_id');
 
-        // Get the car selection element
-        var carSelect = document.getElementById('car_id');
+            // Get the car selection element
+            var carSelect = document.getElementById('car_id');
 
-        // Get the salesperson selection element
-        var salespersonSelect = document.getElementById('salesperson_id');
+            // Get the salesperson selection element
+            var salespersonSelect = document.getElementById('salesperson_id');
 
-        // Get the price input element
-        var priceInput = document.getElementById('price');
+            // Get the price input element
+            var priceInput = document.getElementById('price');
 
-        // Get the price in Indonesian currency element
-        var priceIDRInput = document.getElementById('priceIDR');
+            // Get the price in Indonesian currency element
+            var priceIDRInput = document.getElementById('priceIDR');
 
-        // Add event listener to the car selection
-        carSelect.addEventListener('change', function() {
-            // Get the selected car option
-            var selectedCarOption = carSelect.options[carSelect.selectedIndex];
+            // Add event listener to the car selection
+            carSelect.addEventListener('change', function() {
+                // Get the selected car option
+                var selectedCarOption = carSelect.options[carSelect.selectedIndex];
 
-            // Get the price from the selected car option's data attribute
-            var price = selectedCarOption.getAttribute('data-price');
+                // Get the price from the selected car option's data attribute
+                var price = selectedCarOption.getAttribute('data-price');
 
-            // Update the price input value
-            priceInput.value = price;
+                // Update the price input value
+                priceInput.value = price;
+
+                // Convert the price to Indonesian currency format
+                var priceIDR = formatPriceToIDR(price);
+
+                // Update the price in Indonesian currency input value
+                priceIDRInput.value = priceIDR;
+            });
+
+            // Set the initial price based on the default selected car
+            var defaultCarOption = carSelect.options[carSelect.selectedIndex];
+            var defaultPrice = defaultCarOption.getAttribute('data-price');
+            priceInput.value = defaultPrice;
 
             // Convert the price to Indonesian currency format
-            var priceIDR = formatPriceToIDR(price);
+            var defaultPriceIDR = formatPriceToIDR(defaultPrice);
 
-            // Update the price in Indonesian currency input value
-            priceIDRInput.value = priceIDR;
-        });
+            // Set the initial price in Indonesian currency
+            priceIDRInput.value = defaultPriceIDR;
 
-        // Set the initial price based on the default selected car
-        var defaultCarOption = carSelect.options[carSelect.selectedIndex];
-        var defaultPrice = defaultCarOption.getAttribute('data-price');
-        priceInput.value = defaultPrice;
+            // Function to format price to Indonesian currency format
+            function formatPriceToIDR(price) {
+                var formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                });
+                return formatter.format(price);
+            }
+        </script>
+    </div>
 
-        // Convert the price to Indonesian currency format
-        var defaultPriceIDR = formatPriceToIDR(defaultPrice);
-
-        // Set the initial price in Indonesian currency
-        priceIDRInput.value = defaultPriceIDR;
-
-        // Function to format price to Indonesian currency format
-        function formatPriceToIDR(price) {
-            var formatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-            });
-            return formatter.format(price);
-        }
-    </script>
-</div>
-
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>edit.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-
-    <!-- Display the edit transaction form -->
-    <h2>Edit Transaction</h2>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
     <br>
-    <?php if (session()->has('error')) : ?>
-        <div class="alert alert-danger"><?= session('error') ?></div>
-    <?php endif; ?>
+    <div class="container">
 
-    <form method="post" action="/transaction/update/<?= $transaction['id'] ?>">
+        <!-- Display the edit transaction form -->
+        <h2>Edit Transaction</h2>
+        <br>
+        <?php if (session()->has('error')) : ?>
+            <div class="alert alert-danger"><?= session('error') ?></div>
+        <?php endif; ?>
 
-        <div class="row mb-3">
-            <label for="id" class="form-label col-sm-2">Transaction ID:</label>
-            <div class="col-sm-5">
-                <input type="text" name="id" id="id" value="<?= $transaction['id'] ?>" readonly class="form-control">
+        <form method="post" action="/transaction/update/<?= $transaction['id'] ?>">
+
+            <div class="row mb-3">
+                <label for="id" class="form-label col-sm-2">Transaction ID:</label>
+                <div class="col-sm-5">
+                    <input type="text" name="id" id="id" value="<?= $transaction['id'] ?>" readonly class="form-control">
+                </div>
             </div>
-        </div>
 
 
 
-        <div class="row mb-3">
-            <label for="customer_id" class="form-label col-sm-2">Customer:</label>
-            <div class="col-sm-5">
-                <select name="customer_id" id="customer_id" class="form-select">
-                    <?php foreach ($customers as $customer) : ?>
-                        <option value="<?= $customer['name'] ?>" <?= ($customer['id'] == $transaction['customer_id']) ? 'selected' : '' ?>>
-                            <?= $customer['name'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row mb-3">
+                <label for="customer_id" class="form-label col-sm-2">Customer:</label>
+                <div class="col-sm-5">
+                    <select name="customer_id" id="customer_id" class="form-select">
+                        <?php foreach ($customers as $customer) : ?>
+                            <option value="<?= $customer['name'] ?>" <?= ($customer['id'] == $transaction['customer_id']) ? 'selected' : '' ?>>
+                                <?= $customer['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="car_id" class="form-label col-sm-2">Car:</label>
-            <div class="col-sm-5">
-                <select name="car_id" id="car_id" class="form-select">
-                    <?php foreach ($cars as $car) : ?>
-                        <option value="<?= $car['name'] ?>" data-price="<?= $car['price'] ?>" <?= ($car['id'] == $transaction['car_id']) ? 'selected' : '' ?>>
-                            <?= $car['name'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row mb-3">
+                <label for="car_id" class="form-label col-sm-2">Car:</label>
+                <div class="col-sm-5">
+                    <select name="car_id" id="car_id" class="form-select">
+                        <?php foreach ($cars as $car) : ?>
+                            <option value="<?= $car['name'] ?>" data-price="<?= $car['price'] ?>" <?= ($car['id'] == $transaction['car_id']) ? 'selected' : '' ?>>
+                                <?= $car['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="salesperson_id" class="form-label col-sm-2">Salesperson:</label>
-            <div class="col-sm-5">
-                <select name="salesperson_id" id="salesperson_id" class="form-select">
-                    <?php foreach ($salespersons as $salesperson) : ?>
-                        <option value="<?= $salesperson['name'] ?>" <?= ($salesperson['id'] == $transaction['salesperson_id']) ? 'selected' : '' ?>>
-                            <?= $salesperson['name'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row mb-3">
+                <label for="salesperson_id" class="form-label col-sm-2">Salesperson:</label>
+                <div class="col-sm-5">
+                    <select name="salesperson_id" id="salesperson_id" class="form-select">
+                        <?php foreach ($salespersons as $salesperson) : ?>
+                            <option value="<?= $salesperson['name'] ?>" <?= ($salesperson['id'] == $transaction['salesperson_id']) ? 'selected' : '' ?>>
+                                <?= $salesperson['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="price" class="form-label col-sm-2">Price:</label>
-            <div class="col-sm-5">
-                <input type="text" name="price" id="price" value="<?= $transaction['price'] ?>" readonly class="form-control">
+            <div class="row mb-3">
+                <label for="price" class="form-label col-sm-2">Price:</label>
+                <div class="col-sm-5">
+                    <input type="text" name="price" id="price" value="<?= $transaction['price'] ?>" readonly class="form-control">
+                </div>
             </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Update Transaction</button>
-        <a class="btn btn-warning" href="/transaction">Cancel</a>
-    </form>
+            <button type="submit" class="btn btn-primary">Update Transaction</button>
+            <a class="btn btn-warning" href="/transaction">Cancel</a>
+        </form>
 
-    <script>
-        // Get the car select element
-        const carSelect = document.getElementById('car_id');
-        // Get the price input element
-        const priceInput = document.getElementById('price');
+        <script>
+            // Get the car select element
+            const carSelect = document.getElementById('car_id');
+            // Get the price input element
+            const priceInput = document.getElementById('price');
 
-        // Function to update the price based on the selected car
-        function updatePrice() {
-            // Get the selected car option
-            const selectedCar = carSelect.options[carSelect.selectedIndex];
-            // Get the price value from the selected car option's data attribute
-            const carPrice = selectedCar.dataset.price;
-            // Set the price input value to the selected car's price
-            priceInput.value = carPrice;
-        }
+            // Function to update the price based on the selected car
+            function updatePrice() {
+                // Get the selected car option
+                const selectedCar = carSelect.options[carSelect.selectedIndex];
+                // Get the price value from the selected car option's data attribute
+                const carPrice = selectedCar.dataset.price;
+                // Set the price input value to the selected car's price
+                priceInput.value = carPrice;
+            }
 
-        // Add event listener to the car select element
-        carSelect.addEventListener('change', updatePrice);
+            // Add event listener to the car select element
+            carSelect.addEventListener('change', updatePrice);
 
-        // Call the updatePrice function initially to set the initial price
-        updatePrice();
-    </script>
-    <br>
+            // Call the updatePrice function initially to set the initial price
+            updatePrice();
+        </script>
+        <br>
 
-</div>
+    </div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>index.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
+    <div class="container">
 
-    <br>
-    <div class="d-flex justify-content-center">
-        <h1>Transaction</h1>
-    </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1>Transaction</h1>
+        </div>
 
-    <!-- Display the transaction list -->
+        <!-- Display the transaction list -->
 
-    <div class="d-flex justify-content-between">
-        <a class="btn btn-success" href="/transaction/create">Create New Transaction</a>
-        <form action="/transaction/find" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <a class="btn btn-info" href="/transaction" role="button">Reset</a>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-success" href="/transaction/create">Create New Transaction</a>
+            <form action="/transaction/find" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="submit">Search</button>
+                        <a class="btn btn-info" href="/transaction" role="button">Reset</a>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <?php if (session()->has('success')) : ?>
-        <div class="alert alert-success"><?= session('success') ?></div>
-    <?php endif; ?>
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>ID</th>
-                <th>Customer</th>
-                <th>Car</th>
-                <th>Salesperson</th>
-                <th>Price</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $counter = 1;
-            foreach ($transactions as $transaction) : ?>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td><?= $counter++ ?></td>
-                    <td><?= $transaction['id'] ?></td>
-                    <td><?= $transaction['customer_id'] ?></td>
-                    <td><?= $transaction['car_id'] ?></td>
-                    <td><?= $transaction['salesperson_id'] ?></td>
-                    <td style="white-space: nowrap;">Rp <?= number_format($transaction['price'], 0, ',', '.'); ?></td>
-                    <td style="white-space: nowrap;"><?= date('Y-m-d', strtotime($transaction['created_at'])) ?></td>
-                    <td style="white-space: nowrap;"><?= date('Y-m-d', strtotime($transaction['updated_at'])) ?></td>
-                    <td style="white-space: nowrap;">
-                        <a href="/transaction/edit/<?= $transaction['id'] ?>" class="btn btn-warning">Edit</a>
-                        <a href="/transaction/delete/<?= $transaction['id'] ?>" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th>No</th>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Car</th>
+                    <th>Salesperson</th>
+                    <th>Price</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Action</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php
+                $counter = 1;
+                foreach ($transactions as $transaction) : ?>
+                    <tr>
+                        <td><?= $counter++ ?></td>
+                        <td><?= $transaction['id'] ?></td>
+                        <td><?= $transaction['customer_id'] ?></td>
+                        <td><?= $transaction['car_id'] ?></td>
+                        <td><?= $transaction['salesperson_id'] ?></td>
+                        <td style="white-space: nowrap;">Rp <?= number_format($transaction['price'], 0, ',', '.'); ?></td>
+                        <td style="white-space: nowrap;"><?= date('Y-m-d', strtotime($transaction['created_at'])) ?></td>
+                        <td style="white-space: nowrap;"><?= date('Y-m-d', strtotime($transaction['updated_at'])) ?></td>
+                        <td style="white-space: nowrap;">
+                            <a href="/transaction/edit/<?= $transaction['id'] ?>" class="btn btn-warning">Edit</a>
+                            <a href="/transaction/delete/<?= $transaction['id'] ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
 
-</div>
-<?= $this->endSection(); ?>
-```
+    </div>
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/user` dan buat file ini:<p>
 
   + <b>home.php</b>
-```php
-<?= $this->extend('user/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('user/template'); ?>
+    <?= $this->section('content'); ?>
 
 
-<!-- Start slides -->
-<div id="slides" class="cover-slides">
-    <ul class="slides-container">
+    <!-- Start slides -->
+    <div id="slides" class="cover-slides">
+        <ul class="slides-container">
 
-        <?php foreach ($randomPictures as $picture) : ?>
-            <li class="text-center">
-                <img src="car_img/<?= $picture['picture']; ?>" alt="">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Dinka Dealer</strong></h1>
-                            <p class="m-b-40">
-                                Temukan dealer mobil terbaik di kota Anda di Dealer Mobil Terpercaya. Kami menawarkan beragam pilihan mobil baru dan bekas dengan kualitas terbaik serta harga yang kompetitif. Dengan pengalaman puluhan tahun dalam industri otomotif, kami bangga menjadi mitra terpercaya bagi pelanggan kami.
-                            </p>
+            <?php foreach ($randomPictures as $picture) : ?>
+                <li class="text-center">
+                    <img src="car_img/<?= $picture['picture']; ?>" alt="">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="m-b-20"><strong>Dinka Dealer</strong></h1>
+                                <p class="m-b-40">
+                                    Temukan dealer mobil terbaik di kota Anda di Dealer Mobil Terpercaya. Kami menawarkan beragam pilihan mobil baru dan bekas dengan kualitas terbaik serta harga yang kompetitif. Dengan pengalaman puluhan tahun dalam industri otomotif, kami bangga menjadi mitra terpercaya bagi pelanggan kami.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        <?php endforeach; ?>
+                </li>
+            <?php endforeach; ?>
 
 
 
 
-    </ul>
-    <div class="slides-navigation">
-        <a href="#" class="next"> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-        <a href="#" class="prev"> <i class="fa fa-angle-left" aria-hidden="true"></i></a>
-    </div>
-</div>
-<!-- End slides -->
-
-<!-- Start About -->
-<div class="about-section-box">
-    <div class="container">
-        <div class="row">
-            <div class="text-center">
-                <div class="inner-column">
-                    <h1>Dinka Dealer</h1>
-                    <br>
-                    <h2>
-                        Temukan dealer mobil terbaik di kota Anda di Dealer Mobil Terpercaya. Kami menawarkan beragam pilihan mobil baru dan bekas dengan kualitas terbaik serta harga yang kompetitif. Dengan pengalaman puluhan tahun dalam industri otomotif, kami bangga menjadi mitra terpercaya bagi pelanggan kami.
-                    </h2>
-                </div>
-            </div>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"> <i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
     </div>
-</div>
-</div>
-<!-- End About -->
+    <!-- End slides -->
 
-<!-- Start Gallery -->
-<div class="gallery-box">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="heading-title text-center">
-                    <h2>Gallery</h2>
-                    <p></p>
-                </div>
-            </div>
-        </div>
-        <div class="tz-gallery">
+    <!-- Start About -->
+    <div class="about-section-box">
+        <div class="container">
             <div class="row">
-                <?php
-                $counter = 0;
-                foreach ($cars as $car) :
-                    if ($counter >= 16) {
-                        break; // exit the loop when 16 images are displayed
-                    }
-                ?>
-                    <div class="col-sm-5 col-md-3 col-lg-3">
-                        <a class="lightbox" href="car_img/<?= $car['picture']; ?>">
-                            <img class="img-fluid" src="car_img/<?= $car['picture']; ?>" alt="Gallery Images">
-                        </a>
+                <div class="text-center">
+                    <div class="inner-column">
+                        <h1>Dinka Dealer</h1>
+                        <br>
+                        <h2>
+                            Temukan dealer mobil terbaik di kota Anda di Dealer Mobil Terpercaya. Kami menawarkan beragam pilihan mobil baru dan bekas dengan kualitas terbaik serta harga yang kompetitif. Dengan pengalaman puluhan tahun dalam industri otomotif, kami bangga menjadi mitra terpercaya bagi pelanggan kami.
+                        </h2>
                     </div>
-                <?php
-                    $counter++;
-                endforeach;
-                ?>
+                </div>
             </div>
-
         </div>
     </div>
-    <!-- End Gallery -->
-    <?= $this->endSection(); ?>
-```
+    </div>
+    <!-- End About -->
+
+    <!-- Start Gallery -->
+    <div class="gallery-box">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="heading-title text-center">
+                        <h2>Gallery</h2>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="tz-gallery">
+                <div class="row">
+                    <?php
+                    $counter = 0;
+                    foreach ($cars as $car) :
+                        if ($counter >= 16) {
+                            break; // exit the loop when 16 images are displayed
+                        }
+                    ?>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <a class="lightbox" href="car_img/<?= $car['picture']; ?>">
+                                <img class="img-fluid" src="car_img/<?= $car['picture']; ?>" alt="Gallery Images">
+                            </a>
+                        </div>
+                    <?php
+                        $counter++;
+                    endforeach;
+                    ?>
+                </div>
+
+            </div>
+        </div>
+        <!-- End Gallery -->
+        <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>navbar.php</b>
-```php
-<header class="top-navbar">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Dinka Dealer</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/vehicle">Cars</a>
-                    </li>
+    ```php
+    <header class="top-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Dinka Dealer</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/vehicle">Cars</a>
+                        </li>
 
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/sales">Admin Page</a>
-                    </li>
-                </ul>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/sales">Admin Page</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-```
+        </nav>
+    </header>
+    ```
 <br>
 
 
   + <b>template.php</b>
-```php
-<!doctype html>
-<html lang="en">
+    ```php
+    <!doctype html>
+    <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Site CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="css/responsive.css">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/custom.css">
 
-    <title> <?= $title; ?> </title>
+        <title> <?= $title; ?> </title>
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <?= $this->include('user/navbar') ?>
+        <?= $this->include('user/navbar') ?>
 
-    <?= $this->renderSection('content') ?>
-
-
-<div class="sticky-bottom">
-        <!-- Start Contact info -->
-        <div class="contact-imfo-box">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <i class="fa fa-volume-control-phone"></i>
-                        <div class="overflow-hidden">
-                            <h4>Nomor Telepon</h4>
-                            <p class="lead">
-                                021 544-112-441
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <i class="fa fa-envelope"></i>
-                        <div class="overflow-hidden">
-                            <h4>Email</h4>
-                            <p class="lead">
-                                sales@dealermakmur.com
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <i class="fa fa-map-marker"></i>
-                        <div class="overflow-hidden">
-                            <h4>Lokasi</h4>
-                            <p class="lead">
-                                Jawa Barat, Kab.Bekasi, Cikarang.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Contact info -->
+        <?= $this->renderSection('content') ?>
 
 
-
-        <!-- Start Footer -->
-        <footer class="footer-area ">
-            <div class="copyright">
+    <div class="sticky-bottom">
+            <!-- Start Contact info -->
+            <div class="contact-imfo-box">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <p class="company-name">Kelompok 2 - TI.21 &copy; 2023
+                        <div class="col-md-4">
+                            <i class="fa fa-volume-control-phone"></i>
+                            <div class="overflow-hidden">
+                                <h4>Nomor Telepon</h4>
+                                <p class="lead">
+                                    021 544-112-441
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fa fa-envelope"></i>
+                            <div class="overflow-hidden">
+                                <h4>Email</h4>
+                                <p class="lead">
+                                    sales@dealermakmur.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fa fa-map-marker"></i>
+                            <div class="overflow-hidden">
+                                <h4>Lokasi</h4>
+                                <p class="lead">
+                                    Jawa Barat, Kab.Bekasi, Cikarang.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
-    </footer>
-</div>
-    <!-- End Footer -->
+            <!-- End Contact info -->
 
-    <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-    <!-- ALL JS FILES -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 
-    <!-- ALL PLUGINS -->
-    <script src="js/jquery.superslides.min.js"></script>
-    <script src="js/images-loded.min.js"></script>
-    <script src="js/isotope.min.js"></script>
-    <script src="js/baguetteBox.min.js"></script>
-    <script src="js/form-validator.min.js"></script>
-    <script src="js/contact-form-script.js"></script>
-    <script src="js/custom.js"></script>
-</body>
-
-</html>
-```
-<br>
-
-  + <b>vehicle.php</b>
-```php
-<?= $this->extend('user/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<br>
-<br>
-<div class="container">
-    <h1>Vehicle List</h1>
-    <div class="row mb-5">
-        <?php foreach ($cars as $cars) : ?>
-
-            <div class="my-3 col-md-4">
-                <div class="card">
-                    <img src="car_img/<?= $cars['picture']; ?>" class="card-img-top img-fluid"  alt="..." height="">
-                    <div class="card-body">
-                        <h9 class="card-title text-left"><?= $cars['type']; ?></h9>
-                        <h2 class="card-title"><?= $cars['name']; ?></h2>
-                        <p class="card-text"><?= $cars['description']; ?></p>
-                        <a href="#" class="btn btn-sm btn-success">Rp. <?= $cars['price']; ?></a>
+            <!-- Start Footer -->
+            <footer class="footer-area ">
+                <div class="copyright">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="company-name">Kelompok 2 - TI.21 &copy; 2023
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            </footer>
+        </footer>
     </div>
-</div>
+        <!-- End Footer -->
 
-<?= $this->endSection(); ?>
-```
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        -->
+        <!-- ALL JS FILES -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- ALL PLUGINS -->
+        <script src="js/jquery.superslides.min.js"></script>
+        <script src="js/images-loded.min.js"></script>
+        <script src="js/isotope.min.js"></script>
+        <script src="js/baguetteBox.min.js"></script>
+        <script src="js/form-validator.min.js"></script>
+        <script src="js/contact-form-script.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
+
+    </html>
+    ```
+<br>
+
+   + <b>vehicle.php</b>
+    ```php
+    <?= $this->extend('user/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h1>Vehicle List</h1>
+        <div class="row mb-5">
+            <?php foreach ($cars as $cars) : ?>
+
+                <div class="my-3 col-md-4">
+                    <div class="card">
+                        <img src="car_img/<?= $cars['picture']; ?>" class="card-img-top img-fluid"  alt="..." height="">
+                        <div class="card-body">
+                            <h9 class="card-title text-left"><?= $cars['type']; ?></h9>
+                            <h2 class="card-title"><?= $cars['name']; ?></h2>
+                            <p class="card-text"><?= $cars['description']; ?></p>
+                            <a href="#" class="btn btn-sm btn-success">Rp. <?= $cars['price']; ?></a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 ### Langkah 8: Routes
 buka `app/Config/Routes.php` file dan tambahkan routes:<p>
-```php
-$routes->get('/home', 'Pages::home');
-
-
-// User Routes
-$routes->get('/', 'UserPageController::index');
-$routes->get('/vehicle', 'UserPageController::vehicle');
-
-
-
-// Customer Routes
-$routes->get('/customer', 'CustomerController::index');
-$routes->get('/customer/create', 'CustomerController::create');
-$routes->post('/customer/store', 'CustomerController::store');
-$routes->get('/customer/edit/(:any)', 'CustomerController::edit/$1');
-$routes->post('/customer/update/(:any)', 'CustomerController::update/$1');
-$routes->get('/customer/delete/(:any)', 'CustomerController::delete/$1');
-$routes->post('/customer/find', 'CustomerController::find');
-
-
-// Cars Routes
-$routes->get('/car', 'CarsController::index');
-$routes->get('/car/create', 'CarsController::create');
-$routes->post('/car/store', 'CarsController::store');
-$routes->get('/car/edit/(:any)', 'CarsController::edit/$1');
-$routes->post('/car/update/(:any)', 'CarsController::update/$1');
-$routes->get('/car/delete/(:any)', 'CarsController::delete/$1');
-$routes->post('/car/find', 'CarsController::find');
-
-// Agent Routes
-$routes->get('/sales-person', 'SalesPersonController::index');
-$routes->get('/sales-person/create', 'SalesPersonController::create');
-$routes->post('/sales-person/store', 'SalesPersonController::store');
-$routes->get('/sales-person/edit/(:any)', 'SalesPersonController::edit/$1');
-$routes->post('/sales-person/update/(:any)', 'SalesPersonController::update/$1');
-$routes->get('/sales-person/delete/(:any)', 'SalesPersonController::delete/$1');
-$routes->get('/sales-person/search', 'SalesPersonController::search/$1');
-$routes->post('/sales-person/find', 'SalesPersonController::find');
-
-
-
-
-// Transaction Routes
-$routes->get('/transaction', 'TransactionController::index');
-$routes->get('/transaction/create', 'TransactionController::create');
-$routes->post('/transaction/store', 'TransactionController::store');
-$routes->get('/transaction/edit/(:any)', 'TransactionController::edit/$1');
-$routes->post('/transaction/update/(:any)', 'TransactionController::update/$1');
-$routes->get('/transaction/delete/(:any)', 'TransactionController::delete/$1');
-$routes->post('/transaction/find', 'TransactionController::find');
-
-// Sales Routes
-// $routes->get('/sales', 'TransactionController::index2');
-
-// Sales Routes
-$routes->get('/sales', 'DashboardController::index');
-
-```
-
-<br>
-
-### Membuat Menu LOGIN
-Untuk membuat menu Login Kita menggunkan library dari [myth-auth](https://github.com/lonnieezell/myth-auth) <p>
-
-* Langkah-Langkah
-  + copy 
   ```php
-     composer require myth/auth
+  $routes->get('/home', 'Pages::home');
+
+
+  // User Routes
+  $routes->get('/', 'UserPageController::index');
+  $routes->get('/vehicle', 'UserPageController::vehicle');
+
+
+
+  // Customer Routes
+  $routes->get('/customer', 'CustomerController::index');
+  $routes->get('/customer/create', 'CustomerController::create');
+  $routes->post('/customer/store', 'CustomerController::store');
+  $routes->get('/customer/edit/(:any)', 'CustomerController::edit/$1');
+  $routes->post('/customer/update/(:any)', 'CustomerController::update/$1');
+  $routes->get('/customer/delete/(:any)', 'CustomerController::delete/$1');
+  $routes->post('/customer/find', 'CustomerController::find');
+
+
+  // Cars Routes
+  $routes->get('/car', 'CarsController::index');
+  $routes->get('/car/create', 'CarsController::create');
+  $routes->post('/car/store', 'CarsController::store');
+  $routes->get('/car/edit/(:any)', 'CarsController::edit/$1');
+  $routes->post('/car/update/(:any)', 'CarsController::update/$1');
+  $routes->get('/car/delete/(:any)', 'CarsController::delete/$1');
+  $routes->post('/car/find', 'CarsController::find');
+
+  // Agent Routes
+  $routes->get('/sales-person', 'SalesPersonController::index');
+  $routes->get('/sales-person/create', 'SalesPersonController::create');
+  $routes->post('/sales-person/store', 'SalesPersonController::store');
+  $routes->get('/sales-person/edit/(:any)', 'SalesPersonController::edit/$1');
+  $routes->post('/sales-person/update/(:any)', 'SalesPersonController::update/$1');
+  $routes->get('/sales-person/delete/(:any)', 'SalesPersonController::delete/$1');
+  $routes->get('/sales-person/search', 'SalesPersonController::search/$1');
+  $routes->post('/sales-person/find', 'SalesPersonController::find');
+
+
+
+
+  // Transaction Routes
+  $routes->get('/transaction', 'TransactionController::index');
+  $routes->get('/transaction/create', 'TransactionController::create');
+  $routes->post('/transaction/store', 'TransactionController::store');
+  $routes->get('/transaction/edit/(:any)', 'TransactionController::edit/$1');
+  $routes->post('/transaction/update/(:any)', 'TransactionController::update/$1');
+  $routes->get('/transaction/delete/(:any)', 'TransactionController::delete/$1');
+  $routes->post('/transaction/find', 'TransactionController::find');
+
+  // Sales Routes
+  // $routes->get('/sales', 'TransactionController::index2');
+
+  // Sales Routes
+  $routes->get('/sales', 'DashboardController::index');
+
   ```
-  + Configuration
-    1. Edit <b>app/Config/Validation.php</b><p>
-    `use Myth\Auth\Authentication\Passwords\ValidationRules;`<p>
-    2. untuk bagian ruleset<p>
-    `ValidationRules::class,`<p>
-    3. Setelah itu migrasikan database di terminal<p>
-    ```php 
-    php spark migrate -all
-    ```
-  + Restricting by Route
-    kemudian edit dibagian `application/Config/Filters.php` dibagian `aliases`<p>
+
+  <br>
+
+  ### Membuat Menu LOGIN
+  Untuk membuat menu Login Kita menggunkan library dari [myth-auth](https://github.com/lonnieezell/myth-auth) <p>
+
+  * Langkah-Langkah
+    + copy 
     ```php
-      'login'      => \Myth\Auth\Filters\LoginFilter::class,
-      'role'       => \Myth\Auth\Filters\RoleFilter::class,
-      'permission' => \Myth\Auth\Filters\PermissionFilter::class,
+      composer require myth/auth
     ```
-    kita disini menggunkan fitur filters untuk melock login bagian admin saja
-    ```php
-      public filters = [
-      'login' => ['before' => ['account/*']],
-      ];
-    ```
+    + Configuration
+      1. Edit <b>app/Config/Validation.php</b><p>
+      `use Myth\Auth\Authentication\Passwords\ValidationRules;`<p>
+      2. untuk bagian ruleset<p>
+      `ValidationRules::class,`<p>
+      3. Setelah itu migrasikan database di terminal<p>
+      ```php 
+      php spark migrate -all
+      ```
+    + Restricting by Route
+      kemudian edit dibagian `application/Config/Filters.php` dibagian `aliases`<p>
+      ```php
+        'login'      => \Myth\Auth\Filters\LoginFilter::class,
+        'role'       => \Myth\Auth\Filters\RoleFilter::class,
+        'permission' => \Myth\Auth\Filters\PermissionFilter::class,
+      ```
+      kita disini menggunkan fitur filters untuk melock login bagian admin saja
+      ```php
+        public filters = [
+        'login' => ['before' => ['account/*']],
+        ];
+      ```
   
 <br>
 
