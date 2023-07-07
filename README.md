@@ -78,7 +78,7 @@ Jika belum mempunyai composer anda bisa download di sini [Get Composer](https://
 Buat database MySQL untuk aplikasi penjualan mobil, nama database `ci4`<p><br>
 
 1. <b>Cars Table:</b>
-```php
+```sql
 CREATE TABLE `cars` (
   `id` int(11) NOT NULL,
   `picture` varchar(255) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE `cars` (
 
 
 2. <b>Customers Table</b>
-```php
+```sql
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `customers` (
 
 
 3. <b>Salesperson Table</b>
-```php
+```sql
 CREATE TABLE `salesperson` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `salesperson` (
 
 
 4. <b>Transaction Table</b>
-```php
+```sql
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
   `customer_id` varchar(255) NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `transactions` (
 
 
 5. <b>Users Table</b>
-```php
+```sql
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
