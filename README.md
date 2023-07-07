@@ -2486,5 +2486,6 @@ buka `app/Config/Routes.php` file dan tambahkan routes:<p>
 
 # TERIMAKASIH
 Itu saja dari penjelasan kami. Untuk ke atas silahkan naik rocket ini:<P>
-!(asset/giphy.gif)(#daftar-isi)
+[![](asset/giphy.gif)](#daftar-isi)
+[![Version](https://cocoapod-badges.herokuapp.com/v/youtube-ios-player-helper/badge.png)](https://cocoapods.org/pods/youtube-ios-player-helper)
 
