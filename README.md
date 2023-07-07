@@ -53,7 +53,11 @@
 
 ##  Server DEMO
 Untuk mencoba aplikasi ini silahkan klik [DEMO](https://dinkadealer.site/) ini<p>
-User/Password Admin Page kita user: `admin2100` , password: `Ganteng12345`
+User/Password Admin Page:<p> 
+- user: `admin2100`
+- password: `Ganteng12345`
+> Untuk menggunakan aplikasi ini ketik `git clone` paste code HTTPS.
+> `composer install` lalu `composer update` untuk menginstall dan memperbaharui versi vendor
 
 ## Langkah Pembuatan
 ### Langkah 1: Instal CodeIgniter 4
