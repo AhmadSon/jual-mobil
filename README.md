@@ -39,6 +39,7 @@
 # Daftar Isi
 
 - [Server DEMO](#server-demo)
+  - [Video Penjelasan Aplikasi](#video-penjelasan-aplikasi)
 - [Langkah Pembuatan](#langkah-pembuatan)
   - [Langkah 1: Install Codeigniter 4](#langkah-1-instal-codeigniter-4)
   - [Langkah 2: Create ERD](#langkah-2-create-erd)
@@ -57,7 +58,10 @@ User/Password Admin Page:<p>
 - user: `admin2100`
 - password: `Ganteng12345`
 > Untuk menggunakan aplikasi ini ketik `git clone` paste code HTTPS.
-> `composer install` lalu `composer update` untuk menginstall dan memperbaharui versi vendor
+> `composer install` lalu `composer update` untuk menginstall dan memperbaharui versi vendor<p>
+
+### Video Penjelasan Aplikasi
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
 ## Langkah Pembuatan
 ### Langkah 1: Instal CodeIgniter 4
