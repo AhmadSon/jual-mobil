@@ -11,21 +11,21 @@
             <td>Ahmad Syukron</td>
             <td>312110056</td>
             <td>TI.21.A.1</td>
+            <td>Design User Interface (Front End, HTML dan CSS)</td>
         </tr>
         <tr>
             <td>Abid Husein</td>
             <td>312110031</td>
             <td>TI.21.A.1</td>
+            <td>Rancangan Basis Data ERD</td>
         </tr>
         <tr>
             <td>Iman Setiawan</td>
             <td>312110219</td>
             <td>TI.21.A.1</td>
+            <td>Publikasi Aplikasi (Web Hosting)</td>
         </tr>
         <tr>
-            <td>Design User Interface (Front End, HTML dan CSS)</td>
-            <td>Rancangan Basis Data ERD</td>
-            <td>Publikasi Aplikasi (Web Hosting)</td>
         </tr>
     </table>
 </body>
