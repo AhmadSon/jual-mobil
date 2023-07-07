@@ -52,7 +52,7 @@
 
 
 ##  Server DEMO
-Untuk mencoba aplikasi ini silahkan klik [DEMO](https:dinkadealer.site) ini<p>
+Untuk mencoba aplikasi ini silahkan klik [DEMO](https://dinkadealer.site/) ini<p>
 User/Password Admin Page kita user: `admin2100` , password: `Ganteng12345`
 
 ## Langkah Pembuatan
@@ -2444,8 +2444,36 @@ $routes->get('/sales', 'DashboardController::index');
 <br>
 
 ### Membuat Menu LOGIN
+Untuk membuat menu Login Kita menggunkan library dari [myth-auth](https://github.com/lonnieezell/myth-auth) <p>
 
+* Langkah-Langkah
+  + copy 
+  ```php
+     composer require myth/auth
+  ```
+  + Configuration
+    1. Edit <b>app/Config/Validation.php</b><p>
+    `use Myth\Auth\Authentication\Passwords\ValidationRules;`<p>
+    2. untuk bagian ruleset<p>
+    `ValidationRules::class,`<p>
+    3. Setelah itu migrasikan database di terminal<p>
+    ```php 
+    php spark migrate -all
+    ```
+  + Restricting by Route
+    kemudian edit dibagian `application/Config/Filters.php` dibagian `aliases`<p>
+    ```php
+      'login'      => \Myth\Auth\Filters\LoginFilter::class,
+      'role'       => \Myth\Auth\Filters\RoleFilter::class,
+      'permission' => \Myth\Auth\Filters\PermissionFilter::class,
+    ```
+    kita disini menggunkan fitur filters untuk melock login bagian admin saja
+    ```php
+      public filters = [
+      'login' => ['before' => ['account/*']],
+      ];
+    ```
+  
 <br>
-
 
 
