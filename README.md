@@ -504,394 +504,394 @@ Disini model yang kita buat ada `CarsController.php`, `CustomerController.php`, 
 
 
 * <b>SalesPersonController.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\SalesPersonModel;
-use CodeIgniter\Controller;
+    use App\Models\SalesPersonModel;
+    use CodeIgniter\Controller;
 
-class SalesPersonController extends Controller
-{
-
-    protected $salesPersonModel;
-
-    public function __construct()
+    class SalesPersonController extends Controller
     {
-        $this->salesPersonModel = new SalesPersonModel();
+
+        protected $salesPersonModel;
+
+        public function __construct()
+        {
+            $this->salesPersonModel = new SalesPersonModel();
+        }
+        public function index()
+        {
+            $model = new SalesPersonModel();
+            $data = [
+                'title' => 'Sales Person List',
+                'agents' => $model->findAll()
+                
+            ];
+
+            return view('sales-person/index', $data);
+        }
+
+        public function create()
+        {
+            $data = [
+                'title' => 'Add Sales Person',
+                
+            ];
+            return view('sales-person/create', $data);
+        }
+
+        public function store()
+        {
+            $model = new SalesPersonModel();
+
+            $agentData = [
+                'name' => $this->request->getVar('name'),
+                'phone_number' => $this->request->getVar('phone_number'),
+                'email' => $this->request->getVar('email')
+            ];
+
+            $model->insert($agentData);
+
+            return redirect()->to('/sales-person');
+        }
+
+        public function edit($id)
+        {
+            $model = new SalesPersonModel();
+            $data = [
+                'title' => 'Edit Sales Person',
+                'salesperson' => $model->find($id)
+                
+            ];
+
+            return view('sales-person/edit', $data);
+        }
+
+        public function update($id)
+        {
+            $model = new SalesPersonModel();
+
+            $agentData = [
+                'name' => $this->request->getVar('name'),
+                'phone_number' => $this->request->getVar('phone_number'),
+                'email' => $this->request->getVar('email')
+            ];
+
+            $model->update($id, $agentData);
+
+            return redirect()->to('/sales-person');
+        }
+
+        public function delete($id)
+        {
+            $model = new SalesPersonModel();
+            $model->delete($id);
+
+            return redirect()->to('/sales-person');
+        }
+
+        public function find()
+        {
+            $keyword = $this->request->getPost('keyword');
+            $salesPersonModel = new SalesPersonModel();
+
+            $data = [
+                'title' => 'Edit Sales Person',
+                'agents' => $salesPersonModel->search($keyword)
+            ];
+
+            return view('sales-person/index', $data);
+        }
+        
     }
-    public function index()
-    {
-        $model = new SalesPersonModel();
-        $data = [
-            'title' => 'Sales Person List',
-            'agents' => $model->findAll()
-            
-        ];
 
-        return view('sales-person/index', $data);
-    }
-
-    public function create()
-    {
-        $data = [
-            'title' => 'Add Sales Person',
-            
-        ];
-        return view('sales-person/create', $data);
-    }
-
-    public function store()
-    {
-        $model = new SalesPersonModel();
-
-        $agentData = [
-            'name' => $this->request->getVar('name'),
-            'phone_number' => $this->request->getVar('phone_number'),
-            'email' => $this->request->getVar('email')
-        ];
-
-        $model->insert($agentData);
-
-        return redirect()->to('/sales-person');
-    }
-
-    public function edit($id)
-    {
-        $model = new SalesPersonModel();
-        $data = [
-            'title' => 'Edit Sales Person',
-            'salesperson' => $model->find($id)
-            
-        ];
-
-        return view('sales-person/edit', $data);
-    }
-
-    public function update($id)
-    {
-        $model = new SalesPersonModel();
-
-        $agentData = [
-            'name' => $this->request->getVar('name'),
-            'phone_number' => $this->request->getVar('phone_number'),
-            'email' => $this->request->getVar('email')
-        ];
-
-        $model->update($id, $agentData);
-
-        return redirect()->to('/sales-person');
-    }
-
-    public function delete($id)
-    {
-        $model = new SalesPersonModel();
-        $model->delete($id);
-
-        return redirect()->to('/sales-person');
-    }
-
-    public function find()
-    {
-        $keyword = $this->request->getPost('keyword');
-        $salesPersonModel = new SalesPersonModel();
-
-        $data = [
-            'title' => 'Edit Sales Person',
-            'agents' => $salesPersonModel->search($keyword)
-        ];
-
-        return view('sales-person/index', $data);
-    }
-    
-}
-
-```
+    ```
 <br>
 
 
 * <b>Home.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-class Home extends BaseController
-{
-    public function index()
+    class Home extends BaseController
     {
-        return view('welcome_message');
+        public function index()
+        {
+            return view('welcome_message');
+        }
     }
-}
-```
+    ```
 <br>
 
 
 * <b>Pages.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-class Pages extends BaseController
-{
-    public function home()
+    class Pages extends BaseController
     {
-        $data = [
-            'title' => 'Home Page'
-        ];
-        echo view('Pages/home', $data);
+        public function home()
+        {
+            $data = [
+                'title' => 'Home Page'
+            ];
+            echo view('Pages/home', $data);
 
-    }
-    public function about()
-    { 
-        $data = [
-            'title' => 'About'
-        ];
-        echo view('Pages/About', $data);
-    }
+        }
+        public function about()
+        { 
+            $data = [
+                'title' => 'About'
+            ];
+            echo view('Pages/About', $data);
+        }
 
-    public function contact()
-    { 
-        $data = [
-            'title' => 'Contact Us',
-            'alamat' => [
-                [
-                    'tipe' => 'Rumah',
-                    'alamat' => 'Jalan Bosih',
-                    'kota' => 'Bekasi'
-                ],
-                [
-                    'tipe' => 'Kantor',
-                    'alamat' => 'Jalan Kota',
-                    'kota' => 'Jakarta'
+        public function contact()
+        { 
+            $data = [
+                'title' => 'Contact Us',
+                'alamat' => [
+                    [
+                        'tipe' => 'Rumah',
+                        'alamat' => 'Jalan Bosih',
+                        'kota' => 'Bekasi'
+                    ],
+                    [
+                        'tipe' => 'Kantor',
+                        'alamat' => 'Jalan Kota',
+                        'kota' => 'Jakarta'
+                    ]
                 ]
-            ]
-        ];
-        echo view('Pages/contact', $data);
+            ];
+            echo view('Pages/contact', $data);
+        }
+
+
     }
-
-
-}
-```
+    ```
 <br>
 
 
 * <b>UserPageController.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\CarModel;
+    use App\Models\CarModel;
 
-class UserPageController extends BaseController
-{
-    public function index()
+    class UserPageController extends BaseController
     {
+        public function index()
+        {
 
 
-        $carModel = new CarModel();
-        // Retrieve car data from the database
+            $carModel = new CarModel();
+            // Retrieve car data from the database
 
-        $randomPictures = $carModel
-            ->select('picture')
-            ->orderBy('RAND()')
-            ->limit(5)
-            ->findAll();
+            $randomPictures = $carModel
+                ->select('picture')
+                ->orderBy('RAND()')
+                ->limit(5)
+                ->findAll();
 
-        $cars = $carModel->findAll();
+            $cars = $carModel->findAll();
 
-        // Pass the car data to the view
-        $data = [
-            'cars' => $cars,
-            'title' => 'Dinka Dealer',
-            'randomPictures' => array_slice($randomPictures, 0, 5),
-        ];
-        echo view('user/home', $data);
+            // Pass the car data to the view
+            $data = [
+                'cars' => $cars,
+                'title' => 'Dinka Dealer',
+                'randomPictures' => array_slice($randomPictures, 0, 5),
+            ];
+            echo view('user/home', $data);
+        }
+
+        public function vehicle()
+        {
+
+            $carModel = new CarModel();
+            $data = [
+                'title' => 'Vehicle List',
+                'cars' => $carModel->findAll()
+            ];
+
+            echo view('user/vehicle', $data);
+        }
     }
-
-    public function vehicle()
-    {
-
-        $carModel = new CarModel();
-        $data = [
-            'title' => 'Vehicle List',
-            'cars' => $carModel->findAll()
-        ];
-
-        echo view('user/vehicle', $data);
-    }
-}
-```
+    ```
 <br>
 
 
 * <b>TransactionController.php</b>
-```php
-<?php
+    ```php
+    <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\CustomerModel;
-use App\Models\CarModel;
-use App\Models\SalesPersonModel;
-use App\Models\TransactionModel;
+    use App\Models\CustomerModel;
+    use App\Models\CarModel;
+    use App\Models\SalesPersonModel;
+    use App\Models\TransactionModel;
 
-class TransactionController extends BaseController
-{
-    protected $customerModel;
-    protected $carModel;
-    protected $salesPersonModel;
-
-    public function __construct()
+    class TransactionController extends BaseController
     {
-        $this->customerModel = new CustomerModel();
-        $this->carModel = new CarModel();
-        $this->salesPersonModel = new SalesPersonModel();
+        protected $customerModel;
+        protected $carModel;
+        protected $salesPersonModel;
+
+        public function __construct()
+        {
+            $this->customerModel = new CustomerModel();
+            $this->carModel = new CarModel();
+            $this->salesPersonModel = new SalesPersonModel();
+        }
+
+        // Display a list of transactions
+        public function index()
+        {
+            // Assuming you have a TransactionModel.php model, retrieve all transactions
+            $transactionModel = new TransactionModel();
+
+
+            $data = [
+                'title' => 'Transaction',
+                'transactions' => $transactionModel->findAll()
+                
+            ];
+
+            return view('transaction/index', $data);
+        }
+
+        // Display the create transaction form
+        public function create()
+        {
+            $data['title'] = 'Create Transaction';
+            $data['customers'] = $this->customerModel->findAll();
+            $data['cars'] = $this->carModel->findAll();
+            $data['salespersons'] = $this->salesPersonModel->findAll();
+        
+
+            return view('transaction/create', $data);
+        }
+
+        // Store the newly created transaction
+        public function store()
+        {
+            // Get the input data
+            $customerId = $this->request->getPost('customer_id');
+            $carId = $this->request->getPost('car_id');
+            $salespersonId = $this->request->getPost('salesperson_id');
+            $price = $this->request->getPost('price');
+        
+            // Store the transaction in the database (you need to create the transaction model)
+            $transactionData = [
+                'customer_id' => $customerId,
+                'car_id' => $carId,
+                'salesperson_id' => $salespersonId,
+                'price' => $price
+            ];
+        
+            // Assuming you have a TransactionModel.php model, create a new instance and save the data
+            $transactionModel = new TransactionModel();
+            $transactionModel->insert($transactionData);
+        
+            // Redirect to the transaction list page or show a success message
+            return redirect()->to('/transaction')->with('success', 'Transaction created successfully.');
+        }
+
+        // Display the edit transaction form
+        public function edit($id)
+        {
+            $transactionModel = new TransactionModel();
+            $data['title'] = 'Edit Data';
+            $data['transaction'] = $transactionModel->find($id);
+            $data['customers'] = $this->customerModel->findAll();
+            $data['cars'] = $this->carModel->findAll();
+            $data['salespersons'] = $this->salesPersonModel->findAll();
+
+            return view('transaction/edit', $data);
+        }
+
+        // Update the existing transaction
+        public function update($id)
+        {
+            // Get the input data
+            $customerId = $this->request->getPost('customer_id');
+            $carId = $this->request->getPost('car_id');
+            $salespersonId = $this->request->getPost('salesperson_id');
+            $price = $this->request->getPost('price');
+
+            // Update the transaction in the database
+            $transactionData = [
+                'customer_id' => $customerId,
+                'car_id' => $carId,
+                'salesperson_id' => $salespersonId,
+                'price' => $price
+            ];
+
+            // Assuming you have a TransactionModel.php model, update the transaction data
+            $transactionModel = new TransactionModel();
+            $transactionModel->update($id, $transactionData);
+
+            // Redirect to the transaction list page or show a success message
+            return redirect()->to('/transaction')->with('success', 'Transaction updated successfully.');
+        }
+
+        // Delete a transaction
+        public function delete($id)
+        {
+            // Assuming you have a TransactionModel.php model, delete the transaction
+            $transactionModel = new TransactionModel();
+            $transactionModel->delete($id);
+
+            // Redirect to the transaction list page or show a success message
+            return redirect()->to('/transaction')->with('success', 'Transaction deleted successfully.');
+        }
+
+        public function index2()
+        {
+            $transactionModel = new TransactionModel();
+
+            // Get total sales
+            $totalSales = $transactionModel->selectSum('price')->get()->getRowArray()['price'];
+
+            // Calculate profit (10% of total sales)
+            $profit = $totalSales * 0.1;
+
+            // Get transactions for the selected month
+            $selectedMonth = $this->request->getGet('month');
+            $transactions = $transactionModel->where('MONTH(created_at)', $selectedMonth)->findAll();
+
+            // Pass the data to the view
+            $data = [
+                'totalSales' => $totalSales,
+                'profit' => $profit,
+                'transactions' => $transactions,
+                'title' => 'asd'
+            ];
+
+            return view('sales/dashboard', $data);
+        }
+        public function find()
+        {
+            $keyword = $this->request->getPost('keyword');
+            $transactionModel = new TransactionModel();
+
+            $data = [
+                'title' => 'Edit Sales Person',
+                'transactions' => $transactionModel->search($keyword)
+            ];
+
+            return view('transaction/index', $data);
+        }
     }
-
-    // Display a list of transactions
-    public function index()
-    {
-        // Assuming you have a TransactionModel.php model, retrieve all transactions
-        $transactionModel = new TransactionModel();
-
-
-        $data = [
-            'title' => 'Transaction',
-            'transactions' => $transactionModel->findAll()
-            
-        ];
-
-        return view('transaction/index', $data);
-    }
-
-    // Display the create transaction form
-    public function create()
-    {
-        $data['title'] = 'Create Transaction';
-        $data['customers'] = $this->customerModel->findAll();
-        $data['cars'] = $this->carModel->findAll();
-        $data['salespersons'] = $this->salesPersonModel->findAll();
-    
-
-        return view('transaction/create', $data);
-    }
-
-    // Store the newly created transaction
-    public function store()
-    {
-        // Get the input data
-        $customerId = $this->request->getPost('customer_id');
-        $carId = $this->request->getPost('car_id');
-        $salespersonId = $this->request->getPost('salesperson_id');
-        $price = $this->request->getPost('price');
-    
-        // Store the transaction in the database (you need to create the transaction model)
-        $transactionData = [
-            'customer_id' => $customerId,
-            'car_id' => $carId,
-            'salesperson_id' => $salespersonId,
-            'price' => $price
-        ];
-    
-        // Assuming you have a TransactionModel.php model, create a new instance and save the data
-        $transactionModel = new TransactionModel();
-        $transactionModel->insert($transactionData);
-    
-        // Redirect to the transaction list page or show a success message
-        return redirect()->to('/transaction')->with('success', 'Transaction created successfully.');
-    }
-
-    // Display the edit transaction form
-    public function edit($id)
-    {
-        $transactionModel = new TransactionModel();
-        $data['title'] = 'Edit Data';
-        $data['transaction'] = $transactionModel->find($id);
-        $data['customers'] = $this->customerModel->findAll();
-        $data['cars'] = $this->carModel->findAll();
-        $data['salespersons'] = $this->salesPersonModel->findAll();
-
-        return view('transaction/edit', $data);
-    }
-
-    // Update the existing transaction
-    public function update($id)
-    {
-        // Get the input data
-        $customerId = $this->request->getPost('customer_id');
-        $carId = $this->request->getPost('car_id');
-        $salespersonId = $this->request->getPost('salesperson_id');
-        $price = $this->request->getPost('price');
-
-        // Update the transaction in the database
-        $transactionData = [
-            'customer_id' => $customerId,
-            'car_id' => $carId,
-            'salesperson_id' => $salespersonId,
-            'price' => $price
-        ];
-
-        // Assuming you have a TransactionModel.php model, update the transaction data
-        $transactionModel = new TransactionModel();
-        $transactionModel->update($id, $transactionData);
-
-        // Redirect to the transaction list page or show a success message
-        return redirect()->to('/transaction')->with('success', 'Transaction updated successfully.');
-    }
-
-    // Delete a transaction
-    public function delete($id)
-    {
-        // Assuming you have a TransactionModel.php model, delete the transaction
-        $transactionModel = new TransactionModel();
-        $transactionModel->delete($id);
-
-        // Redirect to the transaction list page or show a success message
-        return redirect()->to('/transaction')->with('success', 'Transaction deleted successfully.');
-    }
-
-    public function index2()
-    {
-        $transactionModel = new TransactionModel();
-
-        // Get total sales
-        $totalSales = $transactionModel->selectSum('price')->get()->getRowArray()['price'];
-
-        // Calculate profit (10% of total sales)
-        $profit = $totalSales * 0.1;
-
-        // Get transactions for the selected month
-        $selectedMonth = $this->request->getGet('month');
-        $transactions = $transactionModel->where('MONTH(created_at)', $selectedMonth)->findAll();
-
-        // Pass the data to the view
-        $data = [
-            'totalSales' => $totalSales,
-            'profit' => $profit,
-            'transactions' => $transactions,
-            'title' => 'asd'
-        ];
-
-        return view('sales/dashboard', $data);
-    }
-    public function find()
-    {
-        $keyword = $this->request->getPost('keyword');
-        $transactionModel = new TransactionModel();
-
-        $data = [
-            'title' => 'Edit Sales Person',
-            'transactions' => $transactionModel->search($keyword)
-        ];
-
-        return view('transaction/index', $data);
-    }
-}
-```
+    ```
 <br>
 
 
@@ -900,379 +900,379 @@ class TransactionController extends BaseController
 * Buat folder `app/Views/cars` dan buat file ini:<p>
 
   + <b>create.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Input New Cars</h1>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Input New Cars</h1>
 
-            <form method="post" action="/car/store" enctype="multipart/form-data">
+                <form method="post" action="/car/store" enctype="multipart/form-data">
 
 
-                <div class="row mb-3">
-                    <label for="name" class="col-sm-2 form-label">Name:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 form-label">Name:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="type" class="col-sm-2 form-label">Tipe</label>
-                    <div class="col-sm-5">
-                        <input type="type" name="type" id="type" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="type" class="col-sm-2 form-label">Tipe</label>
+                        <div class="col-sm-5">
+                            <input type="type" name="type" id="type" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="picture" class="col-sm-2 form-label">Image</label>
-                    <div class="col-sm-5">
-                        <input class="form-control" type="file" id="picture" name="picture" required>
+                    <div class="row mb-3">
+                        <label for="picture" class="col-sm-2 form-label">Image</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" type="file" id="picture" name="picture" required>
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="description" class="col-sm-2 form-label">Description</label>
-                    <div class="col-sm-5">
-                        <textarea name="description" id="description" class="form-control" required></textarea>
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-2 form-label">Description</label>
+                        <div class="col-sm-5">
+                            <textarea name="description" id="description" class="form-control" required></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="price" class="col-sm-2 form-label">Price</label>
-                    <div class="col-sm-5">
-                        <input type="number" name="price" id="price" class="form-control" required oninput="formatCurrency(this)">
-                        <div id="currency-display" class="form-control" style="border: none; pointer-events: none;"></div>
+                    <div class="row mb-3">
+                        <label for="price" class="col-sm-2 form-label">Price</label>
+                        <div class="col-sm-5">
+                            <input type="number" name="price" id="price" class="form-control" required oninput="formatCurrency(this)">
+                            <div id="currency-display" class="form-control" style="border: none; pointer-events: none;"></div>
+                        </div>
+                        <div class="col-sm-5">
+                        </div>
                     </div>
-                    <div class="col-sm-5">
-                    </div>
-                </div>
 
-                <script>
-                    function formatCurrency(input) {
-                        const price = input.value;
-                        const formattedPrice = new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }).format(price);
-                        document.getElementById('currency-display').innerText = formattedPrice;
-                    }
-                </script>
+                    <script>
+                        function formatCurrency(input) {
+                            const price = input.value;
+                            const formattedPrice = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(price);
+                            document.getElementById('currency-display').innerText = formattedPrice;
+                        }
+                    </script>
 
 
 
-                <button type="submit" class="btn btn-primary">Add Cars</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Add Cars</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>edit.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Edit Cars Data</h1>
-            <form method="post" action="/car/update/<?= $car['id']; ?>" enctype="multipart/form-data">
-                <div class="row mb-3">
-                    <label for="name" class="form-label col-sm-2">Name</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" value="<?= $car['name']; ?>" class="form-control" required>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Edit Cars Data</h1>
+                <form method="post" action="/car/update/<?= $car['id']; ?>" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <label for="name" class="form-label col-sm-2">Name</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" value="<?= $car['name']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="type" class="form-label col-sm-2">Type</label>
-                    <div class="col-sm-5">
-                        <input type="type" name="type" id="type" value="<?= $car['type']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="type" class="form-label col-sm-2">Type</label>
+                        <div class="col-sm-5">
+                            <input type="type" name="type" id="type" value="<?= $car['type']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="description" class="col-sm-2 form-label">Description</label>
-                    <div class="col-sm-5">
-                        <textarea name="description" id="description" class="form-control" required><?= $car['description']; ?></textarea>
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-2 form-label">Description</label>
+                        <div class="col-sm-5">
+                            <textarea name="description" id="description" class="form-control" required><?= $car['description']; ?></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="price" class="form-label col-sm-2">Price</label>
-                    <div class="col-sm-5">
-                        <input type="type" name="price" id="price" value="<?= $car['price']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="price" class="form-label col-sm-2">Price</label>
+                        <div class="col-sm-5">
+                            <input type="type" name="price" id="price" value="<?= $car['price']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Update Cars</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Update Cars</button>
+                </form>
 
 
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>index.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
-    <br>
-    <div class="d-flex justify-content-center">
-        <h1>Cars List</h1>
-    </div>
+    <div class="container">
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1>Cars List</h1>
+        </div>
 
 
-    <div class="d-flex justify-content-between">
-        <a class="btn btn-success" href="/car/create">Add New Cars</a>
-        <form action="/car/find" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <a class="btn btn-info" href="/car" role="button">Reset</a>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-success" href="/car/create">Add New Cars</a>
+            <form action="/car/find" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="submit">Search</button>
+                        <a class="btn btn-info" href="/car" role="button">Reset</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
+
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Picture</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($cars as $index => $customer) : ?>
+                    <tr class="text-center">
+                        <td tyle="white-space: nowrap;"><?= $index + 1; ?></td>
+                        <td tyle="white-space: nowrap;"><?= $customer['name']; ?></td>
+                        <td tyle="white-space: nowrap;">
+
+                            <img class="img-fluid" src="/car_img/<?= $customer['picture']; ?>" alt="Car Picture" width="250px">
+
+                        </td>
+                        <td tyle="white-space: nowrap;"><?= $customer['type']; ?></td>
+                        <td><?= $customer['description']; ?></td>
+
+                        <td style="white-space: nowrap;">Rp <?= number_format($customer['price'], 0, ',', '.'); ?></td>
+
+
+                        <td style="white-space: nowrap;">
+                            <a href="/car/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="/car/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 
-    <?php if (session()->has('success')) : ?>
-        <div class="alert alert-success"><?= session('success') ?></div>
-    <?php endif; ?>
-
-    <table class="table">
-        <thead>
-            <tr class="text-center">
-                <th>No</th>
-                <th>Name</th>
-                <th>Picture</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($cars as $index => $customer) : ?>
-                <tr class="text-center">
-                    <td tyle="white-space: nowrap;"><?= $index + 1; ?></td>
-                    <td tyle="white-space: nowrap;"><?= $customer['name']; ?></td>
-                    <td tyle="white-space: nowrap;">
-
-                        <img class="img-fluid" src="/car_img/<?= $customer['picture']; ?>" alt="Car Picture" width="250px">
-
-                    </td>
-                    <td tyle="white-space: nowrap;"><?= $customer['type']; ?></td>
-                    <td><?= $customer['description']; ?></td>
-
-                    <td style="white-space: nowrap;">Rp <?= number_format($customer['price'], 0, ',', '.'); ?></td>
-
-
-                    <td style="white-space: nowrap;">
-                        <a href="/car/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="/car/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
 * Buat folder `app/Views/customer` dan buat file ini:<p>
 
   + <b>create.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Add New Customer</h1>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Add New Customer</h1>
 
-            <form method="post" action="/customer/store">
+                <form method="post" action="/customer/store">
 
 
-                <div class="row mb-3">
-                    <label for="name" class="col-sm-2 form-label">Name:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 form-label">Name:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
 
 
 
-                <div class="row mb-3">
-                    <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="phone_number" class="col-sm-2 form-label">Phone Number:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="email" class="col-sm-2 form-label">Email:</label>
-                    <div class="col-sm-5">
-                        <input type="email" name="email" id="email" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-2 form-label">Email:</label>
+                        <div class="col-sm-5">
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="address" class="col-sm-2 form-label">Address:</label>
-                    <div class="col-sm-5">
-                        <textarea name="address" id="address" class="form-control" required></textarea>
+                    <div class="row mb-3">
+                        <label for="address" class="col-sm-2 form-label">Address:</label>
+                        <div class="col-sm-5">
+                            <textarea name="address" id="address" class="form-control" required></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Add Customer</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Add Customer</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>edit.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Edit Customers</h1>
-            <form method="post" action="/customer/update/<?= $customer['id']; ?>">
-                <div class="row mb-3">
-                    <label for="name" class="form-label col-sm-2">Name:</label>
-                    <div class="col-sm-5">
-                    <input type="text" name="name" id="name" value="<?= $customer['name']; ?>" class="form-control" required>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Edit Customers</h1>
+                <form method="post" action="/customer/update/<?= $customer['id']; ?>">
+                    <div class="row mb-3">
+                        <label for="name" class="form-label col-sm-2">Name:</label>
+                        <div class="col-sm-5">
+                        <input type="text" name="name" id="name" value="<?= $customer['name']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
-                    <div class="col-sm-5">
-                    <input type="text" name="phone_number" id="phone_number" value="<?= $customer['phone_number']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="phone_number" class="form-label col-sm-2">Phone Number:</label>
+                        <div class="col-sm-5">
+                        <input type="text" name="phone_number" id="phone_number" value="<?= $customer['phone_number']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="email" class="form-label col-sm-2">Email:</label>
-                    <div class="col-sm-5">
-                    <input type="email" name="email" id="email" value="<?= $customer['email']; ?>" class="form-control" required>
+                    <div class="row mb-3">
+                        <label for="email" class="form-label col-sm-2">Email:</label>
+                        <div class="col-sm-5">
+                        <input type="email" name="email" id="email" value="<?= $customer['email']; ?>" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label for="address" class="form-label col-sm-2">Address:</label>
-                    <div class="col-sm-5">
-                    <textarea name="address" id="address" class="form-control" required><?= $customer['address']; ?></textarea>
+                    <div class="row mb-3">
+                        <label for="address" class="form-label col-sm-2">Address:</label>
+                        <div class="col-sm-5">
+                        <textarea name="address" id="address" class="form-control" required><?= $customer['address']; ?></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Update Customer</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Update Customer</button>
+                </form>
 
+            </div>
         </div>
     </div>
-</div>
 
-<?= $this->endSection(); ?>
-```
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
   + <b>index.php</b>
-```php
-<?= $this->extend('Layout/template'); ?>
-<?= $this->section('content'); ?>
+    ```php
+    <?= $this->extend('Layout/template'); ?>
+    <?= $this->section('content'); ?>
 
-<div class="container">
+    <div class="container">
 
 
-    <br>
-    <div class="d-flex justify-content-center">
-        <h1>Customer List</h1>
-    </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1>Customer List</h1>
+        </div>
 
-    
-    <div class="d-flex justify-content-between">
-    <a class="btn btn-success" href="/customer/create">Add New Customer</a>
-        <form action="/customer/find" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <a class="btn btn-info" href="/customer" role="button">Reset</a>
+        
+        <div class="d-flex justify-content-between">
+        <a class="btn btn-success" href="/customer/create">Add New Customer</a>
+            <form action="/customer/find" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="submit">Search</button>
+                        <a class="btn btn-info" href="/customer" role="button">Reset</a>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <?php if (session()->has('success')) : ?>
-        <div class="alert alert-success"><?= session('success') ?></div>
-    <?php endif; ?>
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($customers as $index => $customer) : ?>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td><?= $index + 1; ?></td>
-                    <td><?= $customer['name']; ?></td>
-                    <td><?= $customer['phone_number']; ?></td>
-                    <td><?= $customer['email']; ?></td>
-                    <td><?= $customer['address']; ?></td>
-                    <td>
-                        <a href="/customer/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="/customer/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($customers as $index => $customer) : ?>
+                    <tr>
+                        <td><?= $index + 1; ?></td>
+                        <td><?= $customer['name']; ?></td>
+                        <td><?= $customer['phone_number']; ?></td>
+                        <td><?= $customer['email']; ?></td>
+                        <td><?= $customer['address']; ?></td>
+                        <td>
+                            <a href="/customer/edit/<?= $customer['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="/customer/delete/<?= $customer['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    </table>
+        </table>
 
 
 
 
-</div>
-<?= $this->endSection(); ?>
-```
+    </div>
+    <?= $this->endSection(); ?>
+    ```
 <br>
 
 
